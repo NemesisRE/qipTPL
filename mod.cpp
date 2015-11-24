@@ -1,0 +1,12 @@
+name = "qipTPL";
+picture = "qip-icon.paa";
+actionName = "qip Homepage";
+action = "http://qip.clans.de";
+description = "[qip] Mission Template Mod";
+logo = "qip-icon.paa";
+logoOver = "qip-icon.paa";
+tooltip = "[qip]";
+tooltipOwned = "[qip] Owned";
+overview = "[qip] Mission Template Mod to use in combination with the mission Template itself. (https://github.com/NemesisRE/qip_mission_template.Altis)";
+author = "[qip] NemesisRE";
+overviewPicture = "qip-icon.paa";
