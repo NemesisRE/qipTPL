@@ -1,9 +1,9 @@
-zbe_aiCacheDist				= ADF_Caching_UnitDistance;
+zbe_aiCacheDist				= qipTPL_Caching_UnitDistance;
 zbe_minFrameRate			= -1;
 zbe_debug					= qipTPL_debug;
-zbe_vehicleCacheDistCar		= ADF_Caching_vehicleDistance_land;
-zbe_vehicleCacheDistAir		= ADF_Caching_vehicleDistance_air;
-zbe_vehicleCacheDistBoat	= ADF_Caching_vehicleDistance_sea;
+zbe_vehicleCacheDistCar		= qipTPL_Caching_vehicleDistance_land;
+zbe_vehicleCacheDistAir		= qipTPL_Caching_vehicleDistance_air;
+zbe_vehicleCacheDistBoat	= qipTPL_Caching_vehicleDistance_sea;
 
 zbe_allGroups	   			= 0;
 zbe_cachedGroups   			= [];

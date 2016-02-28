@@ -288,10 +288,10 @@ IL_config = IL_config + [
 	[["rhs_btr_base"], true, [
 		 [ [0,0,-0.15], IL_c_red, IL_attenuation, IL_intensity ]
 	],true],
-	[["ADF_S70A_BASE_F"], false, [
+	[["qipTPL_S70A_BASE_F"], false, [
 		 [ [0,2.2,0.2], IL_c_red, IL_attenuation, IL_intensity ]
 	],true],
-	[["ADF_ASLAV_base_F"], true, [
+	[["qipTPL_ASLAV_base_F"], true, [
 		 [ [0.2,-2.5,-0.5], IL_c_red, IL_attenuation, IL_intensity ]
 	],true]
 ];

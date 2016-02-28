@@ -16,9 +16,9 @@ isCurator					= [qipTPL_unit] call qipTPL_fnc_isCurator;
 qipTPL_init					= ["initTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_uavIntro				= ["uavIntro"] call qipTPL_fnc_paramToBool;
 qipTPL_debug				= ["debugTPL"] call qipTPL_fnc_paramToBool;
-ADF_Log_ServerPerfEnable	= ["ServerPerf"] call qipTPL_fnc_paramToBool; // Enable server performance logging in RPT. [true/false]
-ADF_Caching					= ["Caching"] call qipTPL_fnc_paramToBool; // // Enable/disable caching of units and vehicles.
-ADF_CleanUp					= ["Cleanup"] call qipTPL_fnc_paramToBool; // enable cleaning up of dead bodies (friendly, enemy, vehicles, etc.) [true/false].
+qipTPL_Log_ServerPerfEnable	= ["ServerPerf"] call qipTPL_fnc_paramToBool; // Enable server performance logging in RPT. [true/false]
+qipTPL_Caching					= ["Caching"] call qipTPL_fnc_paramToBool; // // Enable/disable caching of units and vehicles.
+qipTPL_CleanUp					= ["Cleanup"] call qipTPL_fnc_paramToBool; // enable cleaning up of dead bodies (friendly, enemy, vehicles, etc.) [true/false].
 if !(isServer || hasInterface) then {
 	isHC					= true;
 };
@@ -37,16 +37,17 @@ if (isCurator) then {
 
 /********** Server only Init **********/
 if (isServer) then  { //server init
-	#include "\qipTPL\init\ADF\ADF_init_rpt.sqf"
-	if (ADF_CleanUp) then {
+	[] call qipTPL_fnc_rptLog;
+	if (qipTPL_CleanUp) then {
 		[] execVM "\qipTPL\3rdPartyScripts\delete.sqf";
 	}; // garbage collector.
-	if (ADF_Caching) then {
+	if (qipTPL_Caching) then {
 		[] execVM "\qipTPL\3rdPartyAddons\zbe_cache\main.sqf";
-	}; // Configure in ADF_init_config.sqf
+	}; // Configure in qipTPL_init_config.sqf
 };
 
 /**********  Execute Core  **********/
+qipTPL_initLoadout = [] call qipTPL_fnc_initLoadout;
 qipTPL_initTPL = [] execVM '\qipTPL\init\initTPL.sqf';
 
 /**********  Execute 3rd Party addons/scripts **********/
