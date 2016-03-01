@@ -5,7 +5,5 @@ class zeus
 	class coopZeus{};
 	class configZeus{};
 	class tfrZeus{};
-	class initZeus{
-		preInit = 1;
-	};
+	class initZeus{};
 };
