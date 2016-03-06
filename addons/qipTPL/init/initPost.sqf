@@ -12,7 +12,7 @@ _timerInput = qipTPL_missionInitTime; // Mission Init time counter. Min 30 secs.
 _timer = _timerInput / 100;
 _cntStop = -1;
 
-if (isDedicated || isHC || isCurator) exitWith {};
+if (isDedicated || isHC || isVirtualCurator) exitWith {};
 
 if (qipTPL_init) then {
 	if (qipTPL_uavIntro) then {

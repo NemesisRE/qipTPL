@@ -22,6 +22,7 @@ TF_defaultGuerBackpack = "tf_mr3000";
 f_radios_settings_tfr_indepUseRadioCode = false;
 
 qipTPL_tfrSettings = [] execVM "qipTPL\config\tfrSettings.sqf";
+waitUntil {scriptDone qipTPL_tfrSettings;};
 
  if (isServer) then {
 	// Set radio frequencies
@@ -39,15 +40,13 @@ qipTPL_tfrSettings = [] execVM "qipTPL\config\tfrSettings.sqf";
 
 		_friendWest = (resistance getFriend West);
 		_friendEast = (resistance getFriend east);
-		_bluefor = tf_west_radio_code;
-		_opfor = tf_east_radio_code;
 
 		if ((_friendWest > 0.6) && (_friendEast < 0.6)) then {
-			tf_guer_radio_code = _bluefor;
+			tf_guer_radio_code = "_bluefor";
 		};
 
 		if ((_friendWest < 0.6) && (_friendEast > 0.6)) then {
-			tf_guer_radio_code = _opfor;
+			tf_guer_radio_code = "_opfor";
 		};
 	};
 };

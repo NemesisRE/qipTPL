@@ -11,29 +11,47 @@ diag_log "Init - executing init.sqf"; // Reporting. Do NOT edit/remove
 if (!isDedicated && (isNull player)) then {
 	waitUntil {!(isNull player)};
 };
+
+qipTPL_MissionConfig = [] execVM "qipTPL\config\initConfig.sqf";
+waitUntil {scriptDone qipTPL_MissionConfig;};
+qipTPL_initBriefing = [] execVM "qipTPL\config\briefing.sqf"; // Load Mission Briefing
+qipTPL_initCredits = [] execVM "\qipTPL\init\tplCredits.sqf";
+
+// Get addon/mod/dlc availability from the A3 config file and store them in easy to use variables
+dlc_MarksMan 				= isClass (configFile >> "CfgMods" >> "Mark"); // Check if Marksman DLC is present
+dlc_Bundle 					= isClass (configFile >> "CfgMods" >> "DLCBundle"); // Check if DLC Bundle is present
+dlc_Heli 					= isClass (configFile >> "CfgMods" >> "Heli"); // Check if Helicopters DLC is present
+
+mod_CBA 					= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
+mod_TFAR 					= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
+mod_CTAB 					= isClass (configFile >> "CfgPatches" >> "cTab"); // Check if cTab is present
+mod_ACE3 					= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
+mod_AIA	 					= isClass (configFile >> "CfgPatches" >> "AiA_Core"); // All in Arma (Terrain Pack) V1.39 B7
+mod_Ares 					= isClass (configFile >> "CfgPatches" >> "Ares"); // Ares Zeus V1.39 B7
+mod_CSAT 					= isClass (configFile >> "CfgPatches" >> "TEC_CSAT"); // TEC CSAT V1.39 B7
+mod_RHS	 					= isClass (configFile >> "CfgPatches" >> "rhs_main"); // Red Hammer Studios V1.39 B7
 qipTPL_unit					= (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
-isCurator					= [qipTPL_unit] call qipTPL_fnc_isCurator;
+isVirtualCurator			= [player] call qipTPL_fnc_isVirtualCurator;
 qipTPL_init					= ["initTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_uavIntro				= ["uavIntro"] call qipTPL_fnc_paramToBool;
 qipTPL_debug				= ["debugTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_Log_ServerPerfEnable	= ["ServerPerf"] call qipTPL_fnc_paramToBool; // Enable server performance logging in RPT. [true/false]
-qipTPL_Caching					= ["Caching"] call qipTPL_fnc_paramToBool; // // Enable/disable caching of units and vehicles.
-qipTPL_CleanUp					= ["Cleanup"] call qipTPL_fnc_paramToBool; // enable cleaning up of dead bodies (friendly, enemy, vehicles, etc.) [true/false].
+qipTPL_Caching				= ["Caching"] call qipTPL_fnc_paramToBool; // // Enable/disable caching of units and vehicles.
+qipTPL_CleanUp				= ["Cleanup"] call qipTPL_fnc_paramToBool; // enable cleaning up of dead bodies (friendly, enemy, vehicles, etc.) [true/false].
 if !(isServer || hasInterface) then {
 	isHC					= true;
 };
 
-if (isCurator) then {
-	[] spawn qipTPL_fnc_tfrZeus;
-} else {
-	if (qipTPL_init) then {
-		qipTPL_unit enableSimulation false;
-		if (!qipTPL_uavIntro) then {
-			_l = ["tLayer"] call BIS_fnc_rscLayer;
-			_l cutText ["", "BLACK IN", (qipTPL_missionInitTime + 5)];
-		};
+[] spawn qipTPL_fnc_tfrZeus;
+
+if (qipTPL_init) then {
+	qipTPL_unit enableSimulation false;
+	if (!qipTPL_uavIntro) then {
+		_l = ["tLayer"] call BIS_fnc_rscLayer;
+		_l cutText ["", "BLACK IN", (qipTPL_missionInitTime + 5)];
 	};
 };
+
 
 /********** Server only Init **********/
 if (isServer) then  { //server init

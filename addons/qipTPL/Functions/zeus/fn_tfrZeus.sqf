@@ -1,4 +1,5 @@
 waitUntil {time > 0};
+waitUntil {[player] call qipTPL_fnc_isVirtualCurator;};
 waitUntil {call TFAR_fnc_haveSWRadio};
 waitUntil {call TFAR_fnc_haveLRRadio};
 
