@@ -15,3 +15,4 @@ class CfgPatches
 #include "CfgRespawnTemplates.hpp"
 #include "CfgSounds.hpp"
 #include "CfgUnitInsignia.hpp"
+#include "CfgMissions.hpp"

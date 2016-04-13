@@ -65,7 +65,6 @@ if (isServer) then  { //server init
 };
 
 /**********  Execute Core  **********/
-qipTPL_initLoadout = [] call qipTPL_fnc_initLoadout;
 qipTPL_initTPL = [] execVM '\qipTPL\init\initTPL.sqf';
 
 /**********  Execute 3rd Party addons/scripts **********/
