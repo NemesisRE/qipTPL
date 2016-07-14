@@ -36,23 +36,3 @@ if (!mod_CBA) exitWith { // Terminate init as CBA is NOT present
 	diag_log "######################################################################################";
 	diag_log "";diag_log "";
 };
-
-// Server FPS reporting in RPT. The frequency of the reporting is based on server performance.
-if (qipTPL_Log_ServerPerfEnable) then {
-	[] spawn {
-		waitUntil {
-			_qipTPL_rptSnooz = 60;
-			_qipTPL_serverFPS = round (diag_fps);
-			if (((count allUnits)-(count qipTPL_log_pUnits)) < 0) then {qipTPL_log_ai = 0} else {qipTPL_log_ai = ((count allUnits)-(count qipTPL_log_pUnits))};
-			if (_qipTPL_serverFPS < 40) then {_qipTPL_rptSnooz = 15};
-			if (_qipTPL_serverFPS < 30) then {_qipTPL_rptSnooz = 10};
-			if (_qipTPL_serverFPS < 20) then {_qipTPL_rptSnooz = 5};
-			if (_qipTPL_serverFPS < 15) then {_qipTPL_rptSnooz = 1};
-			_qipTPL_GameTime_HMS = [(round time)] call BIS_fnc_secondsToString;
-			diag_log format ["RPT: PERF - Total players: %1  --  Total AI's: %2",count qipTPL_log_pUnits,qipTPL_log_ai];
-			diag_log format ["RPT: PERF - Elapsed time: %1  --  Server FPS: %2  --  Server Min FPS: %3",_qipTPL_GameTime_HMS,_qipTPL_serverFPS,round (diag_fpsmin)];
-			uiSleep _qipTPL_rptSnooz;
-			false
-		};
-	};
-};

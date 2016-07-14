@@ -10,7 +10,7 @@
 
 /*Definable*/
 if (isNil {IL_Debug}) then {
-IL_Debug = qipTPL_debug; 			//Enable Debug Mode
+IL_Debug = false; 			//Enable Debug Mode
 };
 if (isNil {IL_Balls}) then {
 IL_Balls = false; 			//Show the attach points (requires Debug mode)
