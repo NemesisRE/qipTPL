@@ -12,10 +12,11 @@ if (!isDedicated && (isNull player)) then {
 	waitUntil {!(isNull player)};
 };
 
-qipTPL_MissionConfig = [] execVM "qipTPL\config\initConfig.sqf";
-waitUntil {scriptDone qipTPL_MissionConfig;};
-qipTPL_initBriefing = [] execVM "qipTPL\config\briefing.sqf"; // Load Mission Briefing
-qipTPL_initCredits = [] execVM "\qipTPL\init\tplCredits.sqf";
+qipTPL_missionTFR = [] call compile preprocessFileLineNumbers ("qipTPL\Config\tfrSettings.sqf");
+qipTPL_initTFR = [] call qipTPL_fnc_tfrSettings;
+call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
+call compile preprocessFileLineNumbers ("qipTPL\config\briefing.sqf");
+call compile preprocessFileLineNumbers ("\qipTPL\init\tplCredits.sqf");
 
 // Get addon/mod/dlc availability from the A3 config file and store them in easy to use variables
 dlc_MarksMan 				= isClass (configFile >> "CfgMods" >> "Mark"); // Check if Marksman DLC is present
@@ -34,10 +35,6 @@ qipTPL_unit					= (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_un
 isVirtualCurator			= [player] call qipTPL_fnc_isVirtualCurator;
 qipTPL_init					= ["initTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_uavIntro				= ["uavIntro"] call qipTPL_fnc_paramToBool;
-qipTPL_debug				= ["debugTPL"] call qipTPL_fnc_paramToBool;
-qipTPL_Log_ServerPerfEnable	= ["ServerPerf"] call qipTPL_fnc_paramToBool; // Enable server performance logging in RPT. [true/false]
-qipTPL_Caching				= ["Caching"] call qipTPL_fnc_paramToBool; // // Enable/disable caching of units and vehicles.
-qipTPL_CleanUp				= ["Cleanup"] call qipTPL_fnc_paramToBool; // enable cleaning up of dead bodies (friendly, enemy, vehicles, etc.) [true/false].
 if !(isServer || hasInterface) then {
 	isHC					= true;
 };
@@ -52,16 +49,9 @@ if (qipTPL_init) then {
 	};
 };
 
-
 /********** Server only Init **********/
 if (isServer) then  { //server init
 	[] call qipTPL_fnc_rptLog;
-	if (qipTPL_CleanUp) then {
-		[] execVM "\qipTPL\3rdPartyScripts\delete.sqf";
-	}; // garbage collector.
-	if (qipTPL_Caching) then {
-		[] execVM "\qipTPL\3rdPartyAddons\zbe_cache\main.sqf";
-	}; // Configure in qipTPL_init_config.sqf
 };
 
 /**********  Execute Core  **********/

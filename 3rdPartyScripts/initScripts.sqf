@@ -10,6 +10,6 @@ if (!mod_ACE3) then {
 };
 [] execVM "\qipTPL\3rdPartyScripts\IntLight.sqf"; // Interior Lighting
 [] execVM "\qipTPL\3rdPartyScripts\breathfog.sqf";
-if (qipTPL_snowStorm) then {
+/*if (qipTPL_snowStorm) then {
 	[] execVM "\qipTPL\3rdPartyScripts\MKYBlizzard.sqf";
-};
+};*/
