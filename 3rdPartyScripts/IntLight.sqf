@@ -155,6 +155,15 @@ IL_config = IL_config + [
 	[["c130J_base","sab_C130_J_Base"], false, [
 		 [ [0,6,-2], IL_c_red, IL_attenuation, IL_intensity ]
 	],true],
+	[["RHS_C130J_Base"], false, [
+
+		 [ [0,6,3.8], IL_c_red, IL_attenuation, IL_intensity ],
+
+		 [ [0,2,3.8], IL_c_red, IL_attenuation, IL_intensity ],
+
+		 [ [0,-2,3.8], IL_c_red, IL_attenuation, IL_intensity ]
+
+	],true,3],
 	[["sab_an2_BASE"], false, [
 		 [ [0,-1,1.5], IL_c_red, IL_attenuation, IL_intensity ]
 	],true],
