@@ -12,7 +12,7 @@ if (!isDedicated && (isNull player)) then {
 	waitUntil {!(isNull player)};
 };
 
-qipTPL_missionTFR = [] call compile preprocessFileLineNumbers ("qipTPL\Config\tfrSettings.sqf");
+call compile preprocessFileLineNumbers ("qipTPL\Config\tfrSettings.sqf");
 qipTPL_initTFR = [] call qipTPL_fnc_tfrSettings;
 call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\briefing.sqf");
@@ -24,11 +24,11 @@ dlc_Bundle 					= isClass (configFile >> "CfgMods" >> "DLCBundle"); // Check if 
 dlc_Heli 					= isClass (configFile >> "CfgMods" >> "Heli"); // Check if Helicopters DLC is present
 
 mod_CBA 					= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
+//mod_CUP 					= isClass (configFile >> "CfgPatches" >> "CUP"); // Check if CBA is present
 mod_TFAR 					= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
-mod_CTAB 					= isClass (configFile >> "CfgPatches" >> "cTab"); // Check if cTab is present
 mod_ACE3 					= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
-mod_AIA	 					= isClass (configFile >> "CfgPatches" >> "AiA_Core"); // All in Arma (Terrain Pack) V1.39 B7
 mod_Ares 					= isClass (configFile >> "CfgPatches" >> "Ares"); // Ares Zeus V1.39 B7
+mod_Achilles 				= isClass (configFile >> "CfgPatches" >> "Achilles"); // Ares Zeus V1.39 B7
 mod_CSAT 					= isClass (configFile >> "CfgPatches" >> "TEC_CSAT"); // TEC CSAT V1.39 B7
 mod_RHS	 					= isClass (configFile >> "CfgPatches" >> "rhs_main"); // Red Hammer Studios V1.39 B7
 qipTPL_unit					= (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
