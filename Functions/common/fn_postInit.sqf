@@ -23,6 +23,7 @@ mod_CBA 					= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if C
 mod_TFAR 					= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
 mod_ACE3 					= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
 isVirtualCurator			= [player] call qipTPL_fnc_isVirtualCurator;
+qipTPL_unit					= (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
 qipTPL_init					= ["initTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_uavIntro				= ["uavIntro"] call qipTPL_fnc_paramToBool;
 
