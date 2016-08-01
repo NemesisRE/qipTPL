@@ -18,23 +18,14 @@ call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\briefing.sqf");
 call compile preprocessFileLineNumbers ("\qipTPL\init\tplCredits.sqf");
 
-// Get addon/mod/dlc availability from the A3 config file and store them in easy to use variables
-dlc_MarksMan 				= isClass (configFile >> "CfgMods" >> "Mark"); // Check if Marksman DLC is present
-dlc_Bundle 					= isClass (configFile >> "CfgMods" >> "DLCBundle"); // Check if DLC Bundle is present
-dlc_Heli 					= isClass (configFile >> "CfgMods" >> "Heli"); // Check if Helicopters DLC is present
-
+// Get some mods availability from the A3 config file and store them in easy to use variables
 mod_CBA 					= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
-//mod_CUP 					= isClass (configFile >> "CfgPatches" >> "CUP"); // Check if CBA is present
 mod_TFAR 					= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
 mod_ACE3 					= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
-mod_Ares 					= isClass (configFile >> "CfgPatches" >> "Ares"); // Ares Zeus V1.39 B7
-mod_Achilles 				= isClass (configFile >> "CfgPatches" >> "Achilles"); // Ares Zeus V1.39 B7
-mod_CSAT 					= isClass (configFile >> "CfgPatches" >> "TEC_CSAT"); // TEC CSAT V1.39 B7
-mod_RHS	 					= isClass (configFile >> "CfgPatches" >> "rhs_main"); // Red Hammer Studios V1.39 B7
-qipTPL_unit					= (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
 isVirtualCurator			= [player] call qipTPL_fnc_isVirtualCurator;
 qipTPL_init					= ["initTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_uavIntro				= ["uavIntro"] call qipTPL_fnc_paramToBool;
+
 if !(isServer || hasInterface) then {
 	isHC					= true;
 };

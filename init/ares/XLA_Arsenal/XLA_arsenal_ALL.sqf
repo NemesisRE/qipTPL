@@ -12,7 +12,7 @@
 			[[_ammoBox]] call Ares_fnc_AddUnitsToCurator;
 		};
 		//[_ammoBox, ["%ALL"],true,false] call XLA_fnc_addVirtualSideCargo;
-		["AmmoboxInit",[_ammoBox,true,{true},"<t color='#45B6EA'>Arsenal",false]] spawn XLA_fnc_arsenal;
+		["AmmoboxInit",[_ammoBox,true,{true},"<t color='#45B6EA'>Arsenal",true]] spawn XLA_fnc_arsenal;
 		["XLA Arsenal Added"] call Ares_fnc_ShowZeusMessage;
 	}
 ] call Ares_fnc_RegisterCustomModule;

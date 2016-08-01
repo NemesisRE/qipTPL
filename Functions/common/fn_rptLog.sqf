@@ -5,12 +5,8 @@ qipTPL_log_rptMods = "";
 if (isMultiplayer) then {qipTPL_log_pUnits = playableUnits;} else {qipTPL_log_pUnits = switchableUnits};
 if (((count allUnits)-(count qipTPL_log_pUnits)) < 0) then {qipTPL_log_aiUnits = 0} else {qipTPL_log_aiUnits = ((count allUnits)-(count qipTPL_log_pUnits))};
 if (mod_CBA) then {qipTPL_log_rptMods = qipTPL_log_rptMods + "CBA A3";};
-//if (mod_CUP) then {qipTPL_log_rptMods = qipTPL_log_rptMods + ", CUP";};
 if (mod_TFAR) then {qipTPL_log_rptMods = qipTPL_log_rptMods + ", TFAR";};
 if (mod_ACE3) then {qipTPL_log_rptMods = qipTPL_log_rptMods + ", ACE3";};
-if (mod_Ares) then {qipTPL_log_rptMods = qipTPL_log_rptMods + ", Ares";};
-if (mod_Achilles) then {qipTPL_log_rptMods = qipTPL_log_rptMods + ", Achilles";};
-if (mod_RHS) then {qipTPL_log_rptMods = qipTPL_log_rptMods + ", RHS";};
 
 // Init reporting
 diag_log ""; diag_log "";
@@ -21,8 +17,6 @@ diag_log "----------------------------------------------------------------------
 diag_log format ["RPT: Init - Number of clients connected: %1", (count qipTPL_log_pUnits)];
 diag_log "--------------------------------------------------------------------------------------";
 diag_log format ["RPT: Init - Number of AI's active: %1", qipTPL_log_aiUnits];
-diag_log "--------------------------------------------------------------------------------------";
-diag_log format ["RPT: Init - autodetect addons active: %1", qipTPL_log_rptMods];
 diag_log "--------------------------------------------------------------------------------------";
 diag_log ""; diag_log "";
 qipTPL_log_aiUnits = nil; qipTPL_log_rptMods = nil;
