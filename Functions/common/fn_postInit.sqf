@@ -11,29 +11,26 @@ diag_log "Init - executing init.sqf"; // Reporting. Do NOT edit/remove
 if (!isDedicated && (isNull player)) then {
 	waitUntil {!(isNull player)};
 };
-
+call compile preprocessFileLineNumbers ("\qipTPL\qipTPL_config.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\Config\tfrSettings.sqf");
-qipTPL_initTFR = [] call qipTPL_fnc_tfrSettings;
 call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\briefing.sqf");
 call compile preprocessFileLineNumbers ("\qipTPL\init\tplCredits.sqf");
 
 // Get some mods availability from the A3 config file and store them in easy to use variables
-mod_CBA 					= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
-mod_TFAR 					= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
-mod_ACE3 					= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
-mod_Ares 					= isClass (configFile >> "CfgPatches" >> "Ares");
-mod_Achillies 					= isClass (configFile >> "CfgPatches" >> "Achilles");
-isVirtualCurator			= [player] call qipTPL_fnc_isVirtualCurator;
-qipTPL_unit					= (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
-qipTPL_init					= ["initTPL"] call qipTPL_fnc_paramToBool;
-qipTPL_uavIntro				= ["uavIntro"] call qipTPL_fnc_paramToBool;
+mod_CBA 			= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
+mod_TFAR 			= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
+mod_ACE3 			= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
+mod_Ares            = isClass (configFile >> "CfgPatches" >> "Ares");
+mod_Achillies 		= isClass (configFile >> "CfgPatches" >> "Achilles");
+isVirtualCurator	= [player] call qipTPL_fnc_isVirtualCurator;
+qipTPL_unit         = (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
+qipTPL_init			= ["initTPL"] call qipTPL_fnc_paramToBool;
+qipTPL_uavIntro		= ["uavIntro"] call qipTPL_fnc_paramToBool;
 
 if !(isServer || hasInterface) then {
 	isHC					= true;
 };
-
-[] spawn qipTPL_fnc_tfrZeus;
 
 if (qipTPL_init) then {
 	qipTPL_unit enableSimulation false;

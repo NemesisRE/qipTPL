@@ -5,6 +5,5 @@ class zeus
 	class isVirtualCurator{};
 	class coopZeus{};
 	class configZeus{};
-	class tfrZeus{};
 	class initZeus{};
 };
