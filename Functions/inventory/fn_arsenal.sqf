@@ -39,7 +39,7 @@ disableserialization;
 
 _mode = [_this,0,"Open",[displaynull,""]] call bis_fnc_param;
 _this = [_this,1,[]] call bis_fnc_param;
-_fullVersion = missionnamespace getvariable ["BIS_fnc_arsenal_fullArsenal",false];
+_fullVersion = missionnamespace getvariable ["qipTPL_fnc_arsenal_fullArsenal",false];
 
 #define IDCS_LEFT\
 	IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON,\
@@ -106,8 +106,8 @@ _fullVersion = missionnamespace getvariable ["BIS_fnc_arsenal_fullArsenal",false
 
 #define GETVIRTUALCARGO\
 	_virtualItemCargo =\
-		(missionnamespace call bis_fnc_getVirtualItemCargo) +\
-		(_cargo call bis_fnc_getVirtualItemCargo) +\
+		(missionnamespace call qipTPL_fnc_getVirtualItemCargo) +\
+		(_cargo call qipTPL_fnc_getVirtualItemCargo) +\
 		items _center +\
 		assigneditems _center +\
 		primaryweaponitems _center +\
@@ -116,16 +116,16 @@ _fullVersion = missionnamespace getvariable ["BIS_fnc_arsenal_fullArsenal",false
 		[uniform _center,vest _center,headgear _center,goggles _center];\
 	_virtualWeaponCargo = [];\
 	{\
-		_weapon = _x call bis_fnc_baseWeapon;\
+		_weapon = _x call qipTPL_fnc_baseWeapon;\
 		_virtualWeaponCargo set [count _virtualWeaponCargo,_weapon];\
 		{\
 			private ["_item"];\
 			_item = gettext (_x >> "item");\
 			if !(_item in _virtualItemCargo) then {_virtualItemCargo set [count _virtualItemCargo,_item];};\
 		} foreach ((configfile >> "cfgweapons" >> _x >> "linkeditems") call bis_fnc_returnchildren);\
-	} foreach ((missionnamespace call bis_fnc_getVirtualWeaponCargo) + (_cargo call bis_fnc_getVirtualWeaponCargo) + weapons _center + [binocular _center]);\
-	_virtualMagazineCargo = (missionnamespace call bis_fnc_getVirtualMagazineCargo) + (_cargo call bis_fnc_getVirtualMagazineCargo) + magazines _center;\
-	_virtualBackpackCargo = (missionnamespace call bis_fnc_getVirtualBackpackCargo) + (_cargo call bis_fnc_getVirtualBackpackCargo) + [backpack _center];
+	} foreach ((missionnamespace call qipTPL_fnc_getVirtualWeaponCargo) + (_cargo call qipTPL_fnc_getVirtualWeaponCargo) + weapons _center + [binocular _center]);\
+	_virtualMagazineCargo = (missionnamespace call qipTPL_fnc_getVirtualMagazineCargo) + (_cargo call qipTPL_fnc_getVirtualMagazineCargo) + magazines _center;\
+	_virtualBackpackCargo = (missionnamespace call qipTPL_fnc_getVirtualBackpackCargo) + (_cargo call qipTPL_fnc_getVirtualBackpackCargo) + [backpack _center];
 
 #define STATS_WEAPONS\
 	["reloadtime","dispersion","maxzeroing","hit","mass","initSpeed"],\
@@ -178,18 +178,18 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "draw3D": {
-		_display = BIS_fnc_arsenal_display;
+		_display = qipTPL_fnc_arsenal_display;
 
-		_cam = (uinamespace getvariable ["BIS_fnc_arsenal_cam",objnull]);
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_target = (missionnamespace getvariable ["BIS_fnc_arsenal_target",player]);
+		_cam = (uinamespace getvariable ["qipTPL_fnc_arsenal_cam",objnull]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_target = (missionnamespace getvariable ["qipTPL_fnc_arsenal_target",player]);
 
-		_dis = BIS_fnc_arsenal_campos select 0;
-		_dirH = BIS_fnc_arsenal_campos select 1;
-		_dirV = BIS_fnc_arsenal_campos select 2;
+		_dis = qipTPL_fnc_arsenal_campos select 0;
+		_dirH = qipTPL_fnc_arsenal_campos select 1;
+		_dirV = qipTPL_fnc_arsenal_campos select 2;
 
 		[_target,[_dirH + 180,-_dirV,0]] call bis_fnc_setobjectrotation;
-		_target attachto [_center,BIS_fnc_arsenal_campos select 3,""]; //--- Reattach for smooth movement
+		_target attachto [_center,qipTPL_fnc_arsenal_campos select 3,""]; //--- Reattach for smooth movement
 
 		_cam setpos (_target modeltoworld [0,-_dis,0]);
 		_cam setvectordirandup [vectordir _target,vectorup _target];
@@ -202,7 +202,7 @@ switch _mode do {
 			//_cam attachto [_target,[0,-_dis * _disCoef,0],""];
 		};
 
-		if (BIS_fnc_arsenal_type == 0) then {
+		if (qipTPL_fnc_arsenal_type == 0) then {
 			_selections = [];
 			_selections set [IDC_RSCDISPLAYARSENAL_TAB_UNIFORM,		["Pelvis",						[+0.00, +0.00, -0.00]]];
 			_selections set [IDC_RSCDISPLAYARSENAL_TAB_VEST,		["Spine3",						[+0.00, +0.00, +0.00]]];
@@ -224,8 +224,8 @@ switch _mode do {
 			_selections set [IDC_RSCDISPLAYARSENAL_TAB_INSIGNIA,		["LeftShoulder",					[+0.00, +0.00, +0.00]]];
 			//_selections set [IDC_RSCDISPLAYARSENAL_TAB_MISC,		["",[0, 0,0]]];//["",					[+0.00, +0.00, +0.00]]];
 
-			//_cam = (uinamespace getvariable ["BIS_fnc_arsenal_cam",player]);
-			//_target = (uinamespace getvariable ["BIS_fnc_arsenal_target",player]);
+			//_cam = (uinamespace getvariable ["qipTPL_fnc_arsenal_cam",player]);
+			//_target = (uinamespace getvariable ["qipTPL_fnc_arsenal_target",player]);
 			//_alpha = (1 / (_cam distance _target) - 1/3) * 0.75;
 
 			_fade = 1;
@@ -236,7 +236,7 @@ switch _mode do {
 					_pos = _center modeltoworldvisual _selPos;
 					_uiPos = worldtoscreen _pos;
 					if (count _uiPos > 0) then {
-						_fade = _fade min (_uiPos distance BIS_fnc_arsenal_mouse);
+						_fade = _fade min (_uiPos distance qipTPL_fnc_arsenal_mouse);
 						_index = _foreachindex;
 						_ctrlPos = [];
 						{
@@ -286,7 +286,7 @@ switch _mode do {
 		};
 
 		//--- Grid
-		_sphere = missionnamespace getvariable ["BIS_fnc_arsenal_sphere",objnull];
+		_sphere = missionnamespace getvariable ["qipTPL_fnc_arsenal_sphere",objnull];
 		if (is3DEN) then {
 			for "_x" from -5 to 5 step 1 do {
 				drawLine3D [
@@ -310,20 +310,20 @@ switch _mode do {
 		_ctrl = _this select 0;
 		_mX = _this select 1;
 		_mY = _this select 2;
-		BIS_fnc_arsenal_mouse = [_mX,_mY];
+		qipTPL_fnc_arsenal_mouse = [_mX,_mY];
 
-		_cam = (uinamespace getvariable ["BIS_fnc_arsenal_cam",objnull]);
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_target = (missionnamespace getvariable ["BIS_fnc_arsenal_target",player]);
+		_cam = (uinamespace getvariable ["qipTPL_fnc_arsenal_cam",objnull]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_target = (missionnamespace getvariable ["qipTPL_fnc_arsenal_target",player]);
 
-		_dis = BIS_fnc_arsenal_campos select 0;
-		_dirH = BIS_fnc_arsenal_campos select 1;
-		_dirV = BIS_fnc_arsenal_campos select 2;
-		_targetPos = BIS_fnc_arsenal_campos select 3;
+		_dis = qipTPL_fnc_arsenal_campos select 0;
+		_dirH = qipTPL_fnc_arsenal_campos select 1;
+		_dirV = qipTPL_fnc_arsenal_campos select 2;
+		_targetPos = qipTPL_fnc_arsenal_campos select 3;
 		_disLocal = _dis;
 
-		_LMB = BIS_fnc_arsenal_buttons select 0;
-		_RMB = BIS_fnc_arsenal_buttons select 1;
+		_LMB = qipTPL_fnc_arsenal_buttons select 0;
+		_RMB = qipTPL_fnc_arsenal_buttons select 1;
 
 		if (isnull _ctrl) then {_LMB = [0,0];}; //--- Init
 
@@ -332,7 +332,7 @@ switch _mode do {
 			_cY = _LMB select 1;
 			_dX = (_cX - _mX);
 			_dY = (_cY - _mY);
-			BIS_fnc_arsenal_buttons set [0,[_mX,_mY]];
+			qipTPL_fnc_arsenal_buttons set [0,[_mX,_mY]];
 
 			_centerBox = boundingboxreal _center;
 			_centerSizeBottom = _centerBox select 0 select 2;
@@ -352,7 +352,7 @@ switch _mode do {
 			_targetWorldPosZ = (_center modeltoworldvisual _targetPos) select 2;
 			if (_targetWorldPosZ < _posZmin) then {_targetPos set [2,(_targetPos select 2) - _targetWorldPosZ + _posZmin];};
 
-			BIS_fnc_arsenal_campos set [3,_targetPos];
+			qipTPL_fnc_arsenal_campos set [3,_targetPos];
 		};
 
 		if (count _RMB > 0) then {
@@ -366,13 +366,13 @@ switch _mode do {
 				([[0,0,0],_targetPos] call bis_fnc_dirto) - _dX * 180
 			] call bis_fnc_relpos;
 
-			BIS_fnc_arsenal_campos set [1,(_dirH - _dX * 180) % 360];
-			BIS_fnc_arsenal_campos set [2,(_dirV - _dY * 100) max -89 min 89];
-			BIS_fnc_arsenal_campos set [3,_targetPos];
-			BIS_fnc_arsenal_buttons set [1,[_mX,_mY]];
+			qipTPL_fnc_arsenal_campos set [1,(_dirH - _dX * 180) % 360];
+			qipTPL_fnc_arsenal_campos set [2,(_dirV - _dY * 100) max -89 min 89];
+			qipTPL_fnc_arsenal_campos set [3,_targetPos];
+			qipTPL_fnc_arsenal_buttons set [1,[_mX,_mY]];
 		};
 
-		if (isnull _ctrl) then {BIS_fnc_arsenal_buttons = [[],[]];};
+		if (isnull _ctrl) then {qipTPL_fnc_arsenal_buttons = [[],[]];};
 
 		//--- Terminate when unit is dead
 		if (!alive _center || isnull _center) then {
@@ -382,28 +382,28 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "MouseButtonDown": {
-		BIS_fnc_arsenal_buttons set [_this select 1,[_this select 2,_this select 3]];
+		qipTPL_fnc_arsenal_buttons set [_this select 1,[_this select 2,_this select 3]];
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "MouseButtonUp": {
-		BIS_fnc_arsenal_buttons set [_this select 1,[]];
+		qipTPL_fnc_arsenal_buttons set [_this select 1,[]];
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "MouseZChanged": {
-		_cam = (uinamespace getvariable ["BIS_fnc_arsenal_cam",objnull]);
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_target = (missionnamespace getvariable ["BIS_fnc_arsenal_target",player]);
+		_cam = (uinamespace getvariable ["qipTPL_fnc_arsenal_cam",objnull]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_target = (missionnamespace getvariable ["qipTPL_fnc_arsenal_target",player]);
 
-		_disMax = if (bis_fnc_arsenal_type > 0) then {((boundingboxreal _center select 0) vectordistance (boundingboxreal _center select 1)) * 1.5} else {CAM_DIS_MAX};
-		//_disMax = if (bis_fnc_arsenal_type > 0) then {sizeof typeof _center * 1.5} else {CAM_DIS_MAX};
+		_disMax = if (qipTPL_fnc_arsenal_type > 0) then {((boundingboxreal _center select 0) vectordistance (boundingboxreal _center select 1)) * 1.5} else {CAM_DIS_MAX};
+		//_disMax = if (qipTPL_fnc_arsenal_type > 0) then {sizeof typeof _center * 1.5} else {CAM_DIS_MAX};
 		_disMin = _disMax * 0.15;
 		_z = _this select 1;
-		_dis = BIS_fnc_arsenal_campos select 0;
+		_dis = qipTPL_fnc_arsenal_campos select 0;
 		_dis = _dis - (_z / 10);
 		_dis = _dis max _disMin min _disMax;
-		BIS_fnc_arsenal_campos set [0,_dis];
+		qipTPL_fnc_arsenal_campos set [0,_dis];
 	};
 
 
@@ -413,12 +413,12 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "Open": {
-		if !(isnull (uinamespace getvariable ["BIS_fnc_arsenal_cam",objnull])) exitwith {"Arsenal Viewer is already running" call bis_fnc_logFormat;};
-		missionnamespace setvariable ["BIS_fnc_arsenal_fullArsenal",[_this,0,false,[false]] call bis_fnc_param];
+		if !(isnull (uinamespace getvariable ["qipTPL_fnc_arsenal_cam",objnull])) exitwith {"Arsenal Viewer is already running" call bis_fnc_logFormat;};
+		missionnamespace setvariable ["qipTPL_fnc_arsenal_fullArsenal",[_this,0,false,[false]] call bis_fnc_param];
 
 		with missionnamespace do {
-			BIS_fnc_arsenal_cargo = [_this,1,objnull,[objnull]] call bis_fnc_param;
-			BIS_fnc_arsenal_center = [_this,2,player,[player]] call bis_fnc_param;
+			qipTPL_fnc_arsenal_cargo = [_this,1,objnull,[objnull]] call bis_fnc_param;
+			qipTPL_fnc_arsenal_center = [_this,2,player,[player]] call bis_fnc_param;
 		};
 		with uinamespace do {
 			_displayMission = [] call (uinamespace getvariable "bis_fnc_displayMission");
@@ -430,12 +430,12 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "Init": {
-		["bis_fnc_arsenal"] call bis_fnc_startloadingscreen;
+		["qipTPL_fnc_arsenal"] call bis_fnc_startloadingscreen;
 		_display = _this select 0;
-		_toggleSpace = uinamespace getvariable ["BIS_fnc_arsenal_toggleSpace",false];
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		BIS_fnc_arsenal_type = 0; //--- 0 - Arsenal, 1 - Garage
-		BIS_fnc_arsenal_toggleSpace = nil;
+		_toggleSpace = uinamespace getvariable ["qipTPL_fnc_arsenal_toggleSpace",false];
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		qipTPL_fnc_arsenal_type = 0; //--- 0 - Arsenal, 1 - Garage
+		qipTPL_fnc_arsenal_toggleSpace = nil;
 
 		if !(is3DEN) then {
 			if (_fullVersion) then {
@@ -447,7 +447,7 @@ switch _mode do {
 
 				//--- Default appearance (only at the mission start)
 				if (time < 1) then {
-					_defaultArray = uinamespace getvariable ["bis_fnc_arsenal_defaultClass",[]];
+					_defaultArray = uinamespace getvariable ["qipTPL_fnc_arsenal_defaultClass",[]];
 					_defaultClass = [_defaultArray,0,"",[""]] call bis_fnc_paramin;
 					if (isclass (configfile >> "cfgvehicles" >> _defaultClass)) then {
 
@@ -456,8 +456,8 @@ switch _mode do {
 
 						_defaultItems = [_defaultArray,1,[],[[]]] call bis_fnc_paramin;
 						_defaultShow = [_defaultArray,2,-1,[0]] call bis_fnc_paramin;
-						uinamespace setvariable ["bis_fnc_arsenal_defaultItems",_defaultItems];
-						uinamespace setvariable ["bis_fnc_arsenal_defaultShow",_defaultShow];
+						uinamespace setvariable ["qipTPL_fnc_arsenal_defaultItems",_defaultItems];
+						uinamespace setvariable ["qipTPL_fnc_arsenal_defaultShow",_defaultShow];
 					} else {
 						//--- Randomize default loadout
 						_soldiers = [];
@@ -466,19 +466,19 @@ switch _mode do {
 						} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
 						[player,_soldiers call bis_fnc_selectrandom] call bis_fnc_loadinventory;
 					};
-					uinamespace setvariable ["bis_fnc_arsenal_defaultClass",nil];
+					uinamespace setvariable ["qipTPL_fnc_arsenal_defaultClass",nil];
 				};
 			};
 		};
 
 		INITTYPES
-		["InitGUI",[_display,"bis_fnc_arsenal"]] call bis_fnc_arsenal;
-		["Preload"] call bis_fnc_arsenal;
-		["ListAdd",[_display]] call bis_fnc_arsenal;
-		["ListSelectCurrent",[_display]] call bis_fnc_arsenal;
+		["InitGUI",[_display,"qipTPL_fnc_arsenal"]] call qipTPL_fnc_arsenal;
+		["Preload"] call qipTPL_fnc_arsenal;
+		["ListAdd",[_display]] call qipTPL_fnc_arsenal;
+		["ListSelectCurrent",[_display]] call qipTPL_fnc_arsenal;
 
 		//--- Save default weapon type
-		BIS_fnc_arsenal_selectedWeaponType = switch true do {
+		qipTPL_fnc_arsenal_selectedWeaponType = switch true do {
 			case (currentweapon _center == primaryweapon _center): {0};
 			case (currentweapon _center == secondaryweapon _center): {1};
 			case (currentweapon _center == handgunweapon _center): {2};
@@ -486,16 +486,16 @@ switch _mode do {
 		};
 
 		//--- Load stats
-		if (isnil {uinamespace getvariable "bis_fnc_arsenal_weaponStats"}) then {
+		if (isnil {uinamespace getvariable "qipTPL_fnc_arsenal_weaponStats"}) then {
 			uinamespace setvariable [
-				"bis_fnc_arsenal_weaponStats",
+				"qipTPL_fnc_arsenal_weaponStats",
 				[
 					("isclass _x && getnumber (_x >> 'scope') == 2 && getnumber (_x >> 'type') < 5") configclasses (configfile >> "cfgweapons"),
 					STATS_WEAPONS
 				] call bis_fnc_configExtremes
 			];
 		};
-		if (isnil {uinamespace getvariable "bis_fnc_arsenal_equipmentStats"}) then {
+		if (isnil {uinamespace getvariable "qipTPL_fnc_arsenal_equipmentStats"}) then {
 			_statsEquipment = [
 				("isclass _x && getnumber (_x >> 'scope') == 2 && getnumber (_x >> 'itemInfo' >> 'type') in [605,701,801]") configclasses (configfile >> "cfgweapons"),
 				STATS_EQUIPMENT
@@ -514,31 +514,31 @@ switch _mode do {
 				_statsEquipmentMax set [_i,(_statsEquipmentMax select _i) max (_statsBackpacksMax select _i)];
 			};
 
-			uinamespace setvariable ["bis_fnc_arsenal_equipmentStats",[_statsEquipmentMin,_statsEquipmentMax]];
+			uinamespace setvariable ["qipTPL_fnc_arsenal_equipmentStats",[_statsEquipmentMin,_statsEquipmentMax]];
 		};
 
 		with missionnamespace do {
 			[missionnamespace,"arsenalOpened",[_display,_toggleSpace]] call bis_fnc_callscriptedeventhandler;
 		};
-		["bis_fnc_arsenal"] call bis_fnc_endloadingscreen;
+		["qipTPL_fnc_arsenal"] call bis_fnc_endloadingscreen;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "InitGUI": {
 		_display = _this select 0;
 		_function = _this select 1;
-		BIS_fnc_arsenal_display = _display;
-		BIS_fnc_arsenal_mouse = [0,0];
-		BIS_fnc_arsenal_buttons = [[],[]];
-		BIS_fnc_arsenal_action = "";
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		qipTPL_fnc_arsenal_display = _display;
+		qipTPL_fnc_arsenal_mouse = [0,0];
+		qipTPL_fnc_arsenal_buttons = [[],[]];
+		qipTPL_fnc_arsenal_action = "";
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 		_center hideobject false;
 		cuttext ["","plain"];
 		showcommandingmenu "";
 		//["#(argb,8,8,3)color(0,0,0,1)",false,nil,0.1,[0,0.5]] spawn bis_fnc_textTiles;
 
 		//--- Force internal view to enable consistent screen blurring. Restore the original view after closing Arsenal.
-		BIS_fnc_arsenal_cameraview = cameraview;
+		qipTPL_fnc_arsenal_cameraview = cameraview;
 		player switchcamera "internal";
 
 		showhud false;
@@ -552,7 +552,7 @@ switch _mode do {
 			_sphere setdir 0;
 			_sphere setobjecttexture [0,"#(argb,8,8,3)color(0.93,1.0,0.98,0.028,co)"];
 			_sphere setobjecttexture [1,"#(argb,8,8,3)color(0.93,1.0,0.98,0.01,co)"];
-			_center = if (_function == "bis_fnc_arsenal") then {
+			_center = if (_function == "qipTPL_fnc_arsenal") then {
 				createagent [typeof _centerOrig,position _centerOrig,[],0,"none"]
 			} else {
 				createvehicle [typeof _centerOrig,position _centerOrig,[],0,"none"]
@@ -561,8 +561,8 @@ switch _mode do {
 			_center setdir 0;
 			_center switchmove animationstate _centerOrig;
 			_center switchaction "playerstand";
-			if (_function == "bis_fnc_arsenal") then {
-				_inventory = [_centerOrig,[_center,"arsenal"]] call bis_fnc_saveInventory;
+			if (_function == "qipTPL_fnc_arsenal") then {
+				_inventory = [_centerOrig,[_center,"arsenal"]] call qipTPL_fnc_saveInventory;
 				[_center,[_center,"arsenal"]] call bis_fnc_loadInventory;
 				_face = face _centerOrig;
 				_center setface _face;
@@ -586,29 +586,29 @@ switch _mode do {
 			_light lightattachobject [_sphere,[0,0,-_intensity * 7]];
 
 			//--- Save to global variables, so it can be deleted latger
-			missionnamespace setvariable ["BIS_fnc_arsenal_light",_light];
-			missionnamespace setvariable ["BIS_fnc_arsenal_centerOrig",_centerOrig];
-			missionnamespace setvariable ["BIS_fnc_arsenal_center",_center];
-			missionnamespace setvariable ["BIS_fnc_arsenal_sphere",_sphere];
+			missionnamespace setvariable ["qipTPL_fnc_arsenal_light",_light];
+			missionnamespace setvariable ["qipTPL_fnc_arsenal_centerOrig",_centerOrig];
+			missionnamespace setvariable ["qipTPL_fnc_arsenal_center",_center];
+			missionnamespace setvariable ["qipTPL_fnc_arsenal_sphere",_sphere];
 
 			//--- Use the same vision mode as in Eden
-			missionnamespace setvariable ["BIS_fnc_arsenal_visionMode",-2 call bis_fnc_3DENVisionMode];
+			missionnamespace setvariable ["qipTPL_fnc_arsenal_visionMode",-2 call bis_fnc_3DENVisionMode];
 			["ShowInterface",false] spawn bis_fnc_3DENInterface;
 			if (get3denactionstate "togglemap" > 0) then {do3DENAction "togglemap";};
 		};
 
-		_display displayaddeventhandler ["mousebuttondown","with uinamespace do {['MouseButtonDown',_this] call bis_fnc_arsenal;};"];
-		_display displayaddeventhandler ["mousebuttonup","with uinamespace do {['MouseButtonUp',_this] call bis_fnc_arsenal;};"];
-		//_display displayaddeventhandler ["mousezchanged","with uinamespace do {['MouseZChanged',_this] call bis_fnc_arsenal;};"];
-		_display displayaddeventhandler ["keydown","with (uinamespace) do {['KeyDown',_this] call bis_fnc_arsenal;};"];
-		//_display displayaddeventhandler ["mousemoving","with (uinamespace) do {['Loop',_this] call bis_fnc_arsenal;};"];
-		//_display displayaddeventhandler ["mouseholding","with (uinamespace) do {['Loop',_this] call bis_fnc_arsenal;};"];
+		_display displayaddeventhandler ["mousebuttondown","with uinamespace do {['MouseButtonDown',_this] call qipTPL_fnc_arsenal;};"];
+		_display displayaddeventhandler ["mousebuttonup","with uinamespace do {['MouseButtonUp',_this] call qipTPL_fnc_arsenal;};"];
+		//_display displayaddeventhandler ["mousezchanged","with uinamespace do {['MouseZChanged',_this] call qipTPL_fnc_arsenal;};"];
+		_display displayaddeventhandler ["keydown","with (uinamespace) do {['KeyDown',_this] call qipTPL_fnc_arsenal;};"];
+		//_display displayaddeventhandler ["mousemoving","with (uinamespace) do {['Loop',_this] call qipTPL_fnc_arsenal;};"];
+		//_display displayaddeventhandler ["mouseholding","with (uinamespace) do {['Loop',_this] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlMouseArea = _display displayctrl IDC_RSCDISPLAYARSENAL_MOUSEAREA;
-		_ctrlMouseArea ctrladdeventhandler ["mousemoving","with uinamespace do {['Mouse',_this] call bis_fnc_arsenal;};"];
-		_ctrlMouseArea ctrladdeventhandler ["mouseholding","with uinamespace do {['Mouse',_this] call bis_fnc_arsenal;};"];
-		_ctrlMouseArea ctrladdeventhandler ["mousebuttonclick","with uinamespace do {['TabDeselect',[ctrlparent (_this select 0),_this select 1]] call bis_fnc_arsenal;};"];
-		_ctrlMouseArea ctrladdeventhandler ["mousezchanged","with uinamespace do {['MouseZChanged',_this] call bis_fnc_arsenal;};"];
+		_ctrlMouseArea ctrladdeventhandler ["mousemoving","with uinamespace do {['Mouse',_this] call qipTPL_fnc_arsenal;};"];
+		_ctrlMouseArea ctrladdeventhandler ["mouseholding","with uinamespace do {['Mouse',_this] call qipTPL_fnc_arsenal;};"];
+		_ctrlMouseArea ctrladdeventhandler ["mousebuttonclick","with uinamespace do {['TabDeselect',[ctrlparent (_this select 0),_this select 1]] call qipTPL_fnc_arsenal;};"];
+		_ctrlMouseArea ctrladdeventhandler ["mousezchanged","with uinamespace do {['MouseZChanged',_this] call qipTPL_fnc_arsenal;};"];
 		ctrlsetfocus _ctrlMouseArea;
 
 		_ctrlMouseBlock = _display displayctrl IDC_RSCDISPLAYARSENAL_MOUSEBLOCK;
@@ -630,16 +630,16 @@ switch _mode do {
 
 		//--- UI event handlers
 		_ctrlButtonInterface = _display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_BUTTONINTERFACE;
-		_ctrlButtonInterface ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonInterface',[ctrlparent (_this select 0)]] call bis_fnc_arsenal;};"];
+		_ctrlButtonInterface ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonInterface',[ctrlparent (_this select 0)]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlButtonRandom = _display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_BUTTONRANDOM;
 		_ctrlButtonRandom ctrladdeventhandler ["buttonclick",format ["with uinamespace do {['buttonRandom',[ctrlparent (_this select 0)]] call %1;};",_function]];
 
 		_ctrlButtonSave = _display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_BUTTONSAVE;
-		_ctrlButtonSave ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonSave',[ctrlparent (_this select 0)]] call bis_fnc_arsenal;};"];
+		_ctrlButtonSave ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonSave',[ctrlparent (_this select 0)]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlButtonLoad = _display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_BUTTONLOAD;
-		_ctrlButtonLoad ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonLoad',[ctrlparent (_this select 0)]] call bis_fnc_arsenal;};"];
+		_ctrlButtonLoad ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonLoad',[ctrlparent (_this select 0)]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlButtonExport = _display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_BUTTONEXPORT;
 		_ctrlButtonExport ctrladdeventhandler ["buttonclick",format ["with uinamespace do {['buttonExport',[ctrlparent (_this select 0),'init']] call %1;};",_function]];
@@ -655,27 +655,27 @@ switch _mode do {
 		_ctrlButtonTry ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonTry',[ctrlparent (_this select 0)]] call bis_fnc_garage;};"];
 
 		_ctrlArrowLeft = _display displayctrl IDC_RSCDISPLAYARSENAL_ARROWLEFT;
-		_ctrlArrowLeft ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonCargo',[ctrlparent (_this select 0),-1]] call bis_fnc_arsenal;};"];
+		_ctrlArrowLeft ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonCargo',[ctrlparent (_this select 0),-1]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlArrowRight = _display displayctrl IDC_RSCDISPLAYARSENAL_ARROWRIGHT;
-		_ctrlArrowRight ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonCargo',[ctrlparent (_this select 0),+1]] call bis_fnc_arsenal;};"];
+		_ctrlArrowRight ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonCargo',[ctrlparent (_this select 0),+1]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlTemplateButtonOK = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_BUTTONOK;
 		_ctrlTemplateButtonOK ctrladdeventhandler ["buttonclick",format ["with uinamespace do {['buttonTemplateOK',[ctrlparent (_this select 0)]] call %1;};",_function]];
 
 		_ctrlTemplateButtonCancel = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_BUTTONCANCEL;
-		_ctrlTemplateButtonCancel ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonTemplateCancel',[ctrlparent (_this select 0)]] call bis_fnc_arsenal;};"];
+		_ctrlTemplateButtonCancel ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonTemplateCancel',[ctrlparent (_this select 0)]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlTemplateButtonDelete = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_BUTTONDELETE;
-		_ctrlTemplateButtonDelete ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonTemplateDelete',[ctrlparent (_this select 0)]] call bis_fnc_arsenal;};"];
+		_ctrlTemplateButtonDelete ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonTemplateDelete',[ctrlparent (_this select 0)]] call qipTPL_fnc_arsenal;};"];
 
 		_ctrlTemplateValue = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_VALUENAME;
-		_ctrlTemplateValue ctrladdeventhandler ["lbselchanged","with uinamespace do {['templateSelChanged',[ctrlparent (_this select 0)]] call bis_fnc_arsenal;};"];
+		_ctrlTemplateValue ctrladdeventhandler ["lbselchanged","with uinamespace do {['templateSelChanged',[ctrlparent (_this select 0)]] call qipTPL_fnc_arsenal;};"];
 		_ctrlTemplateValue ctrladdeventhandler ["lbdblclick",format ["with uinamespace do {['buttonTemplateOK',[ctrlparent (_this select 0)]] call %1;};",_function]];
 
 		//--- Menus
 		_ctrlIcon = _display displayctrl IDC_RSCDISPLAYARSENAL_TAB;
-		_sortValues = uinamespace getvariable ["bis_fnc_arsenal_sort",[]];
+		_sortValues = uinamespace getvariable ["qipTPL_fnc_arsenal_sort",[]];
 		if !(isnull _ctrlIcon) then {
 			_ctrlIconPos = ctrlposition _ctrlIcon;
 			_ctrlTabs = _display displayctrl IDC_RSCDISPLAYARSENAL_TABS;
@@ -695,12 +695,12 @@ switch _mode do {
 				_mode = if (_idc in [IDCS_LEFT]) then {"TabSelectLeft"} else {"TabSelectRight"};
 				{
 					_x ctrladdeventhandler ["buttonclick",format ["with uinamespace do {['%2',[ctrlparent (_this select 0),%1]] call %3;};",_idc,_mode,_function]];
-					_x ctrladdeventhandler ["mousezchanged","with uinamespace do {['MouseZChanged',_this] call bis_fnc_arsenal;};"];
+					_x ctrladdeventhandler ["mousezchanged","with uinamespace do {['MouseZChanged',_this] call qipTPL_fnc_arsenal;};"];
 				} foreach [_ctrlIcon,_ctrlTab];
 
 				_sort = _sortValues param [_idc,0];
 				_ctrlSort = _display displayctrl (IDC_RSCDISPLAYARSENAL_SORT + _idc);
-				_ctrlSort ctrladdeventhandler ["lbselchanged",format ["with uinamespace do {['lbSort',[_this,%1]] call bis_fnc_arsenal;};",_idc]];
+				_ctrlSort ctrladdeventhandler ["lbselchanged",format ["with uinamespace do {['lbSort',[_this,%1]] call qipTPL_fnc_arsenal;};",_idc]];
 				_ctrlSort lbsetcursel _sort;
 				_sortValues set [_idc,_sort];
 
@@ -711,7 +711,7 @@ switch _mode do {
 				_ctrlList ctrlcommit 0;
 
 				_ctrlList ctrladdeventhandler ["lbselchanged",format ["with uinamespace do {['SelectItem',[ctrlparent (_this select 0),(_this select 0),%1]] call %2;};",_idc,_function]];
-				_ctrlList ctrladdeventhandler ["lbdblclick",format ["with uinamespace do {['ShowItem',[ctrlparent (_this select 0),(_this select 0),%1]] spawn bis_fnc_arsenal;};",_idc]];
+				_ctrlList ctrladdeventhandler ["lbdblclick",format ["with uinamespace do {['ShowItem',[ctrlparent (_this select 0),(_this select 0),%1]] spawn qipTPL_fnc_arsenal;};",_idc]];
 
 				_ctrlListDisabled = _display displayctrl (IDC_RSCDISPLAYARSENAL_LISTDISABLED + _idc);
 				_ctrlListDisabled ctrlenable false;
@@ -720,12 +720,12 @@ switch _mode do {
 				_ctrlSort ctrlcommit 0;
 			} foreach IDCS;
 		};
-		uinamespace setvariable ["bis_fnc_arsenal_sort",_sortValues];
-		['TabDeselect',[_display,-1]] call bis_fnc_arsenal;
+		uinamespace setvariable ["qipTPL_fnc_arsenal_sort",_sortValues];
+		['TabDeselect',[_display,-1]] call qipTPL_fnc_arsenal;
 		['SelectItem',[_display,controlnull,-1]] call (uinamespace getvariable _function);
 
 		_ctrlButtonClose = _display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_BUTTONCLOSE;
-		_ctrlButtonClose ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonClose',[ctrlparent (_this select 0)]] spawn bis_fnc_arsenal;}; true"];
+		_ctrlButtonClose ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonClose',[ctrlparent (_this select 0)]] spawn qipTPL_fnc_arsenal;}; true"];
 
 		if (is3DEN) then {
 			_ctrlButtonClose ctrlsettext localize "STR_DISP_CANCEL";
@@ -768,8 +768,8 @@ switch _mode do {
 				{
 					_ctrl = _display displayctrl (_x select 0);
 					_ctrlBackground = _display displayctrl (_x select 1);
-					_ctrl ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonSpace',_this] spawn bis_fnc_arsenal;}; true"];
-					if (_foreachindex == bis_fnc_arsenal_type) then {
+					_ctrl ctrladdeventhandler ["buttonclick","with uinamespace do {['buttonSpace',_this] spawn qipTPL_fnc_arsenal;}; true"];
+					if (_foreachindex == qipTPL_fnc_arsenal_type) then {
 						_ctrl ctrlenable false;
 						_ctrl ctrlsettextcolor [1,1,1,1];
 						_ctrlBackground ctrlsetbackgroundcolor [0,0,0,1];
@@ -808,18 +808,18 @@ switch _mode do {
 		};
 
 		//--- Camera init
-		_camPosVar = format ["BIS_fnc_arsenal_campos_%1",BIS_fnc_arsenal_type];
-		BIS_fnc_arsenal_campos = missionnamespace getvariable [
+		_camPosVar = format ["qipTPL_fnc_arsenal_campos_%1",qipTPL_fnc_arsenal_type];
+		qipTPL_fnc_arsenal_campos = missionnamespace getvariable [
 			_camPosVar,
 			uinamespace getvariable [
 				_camPosVar,
-				if (BIS_fnc_arsenal_type == 0) then {[5,0,0,[0,0,0.85]]} else {[10,-45,15,[0,0,-1]]}
+				if (qipTPL_fnc_arsenal_type == 0) then {[5,0,0,[0,0,0.85]]} else {[10,-45,15,[0,0,-1]]}
 			]
 		];
-		BIS_fnc_arsenal_campos = +BIS_fnc_arsenal_campos;
+		qipTPL_fnc_arsenal_campos = +qipTPL_fnc_arsenal_campos;
 		_target = createagent ["Logic",position _center,[],0,"none"];
-		_target attachto [_center,BIS_fnc_arsenal_campos select 3,""];
-		missionnamespace setvariable ["BIS_fnc_arsenal_target",_target];
+		_target attachto [_center,qipTPL_fnc_arsenal_campos select 3,""];
+		missionnamespace setvariable ["qipTPL_fnc_arsenal_target",_target];
 
 		_cam = "camera" camcreate position _center;
 		_cam cameraeffect ["internal","back"];
@@ -828,22 +828,22 @@ switch _mode do {
 		_cam camcommitprepared 0;
 		//cameraEffectEnableHUD true;
 		showcinemaborder false;
-		BIS_fnc_arsenal_cam = _cam;
+		qipTPL_fnc_arsenal_cam = _cam;
 		["#(argb,8,8,3)color(0,0,0,1)",false,nil,0,[0,0.5]] call bis_fnc_textTiles;
 
 		//--- Camera reset
-		["Mouse",[controlnull,0,0]] call bis_fnc_arsenal;
-		BIS_fnc_arsenal_draw3D = addMissionEventHandler ["draw3D",{with (uinamespace) do {['draw3D',_this] call bis_fnc_arsenal;};}];
+		["Mouse",[controlnull,0,0]] call qipTPL_fnc_arsenal;
+		qipTPL_fnc_arsenal_draw3D = addMissionEventHandler ["draw3D",{with (uinamespace) do {['draw3D',_this] call qipTPL_fnc_arsenal;};}];
 
-		setacctime (missionnamespace getvariable ["BIS_fnc_arsenal_acctime",1]);
+		setacctime (missionnamespace getvariable ["qipTPL_fnc_arsenal_acctime",1]);
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "Preload": {
 		private ["_data"];
-		_data = missionnamespace getvariable "bis_fnc_arsenal_data";
+		_data = missionnamespace getvariable "qipTPL_fnc_arsenal_data";
 		if (isnil "_data" || cheatsenabled) then {
-			["bis_fnc_arsenal_preload"] call bis_fnc_startloadingscreen;
+			["qipTPL_fnc_arsenal_preload"] call bis_fnc_startloadingscreen;
 			INITTYPES
 			_data = [];
 			{
@@ -860,7 +860,7 @@ switch _mode do {
 				_class = _x;
 				_className = configname _x;
 				_scope = if (isnumber (_class >> "scopeArsenal")) then {getnumber (_class >> "scopeArsenal")} else {getnumber (_class >> "scope")};
-				_isBase = if (isarray (_x >> "muzzles")) then {(_className call bis_fnc_baseWeapon == _className)} else {true}; //-- Check if base weapon (true for all entity types)
+				_isBase = if (isarray (_x >> "muzzles")) then {(_className call qipTPL_fnc_baseWeapon == _className)} else {true}; //-- Check if base weapon (true for all entity types)
 				if (_scope == 2 && {gettext (_class >> "model") != ""} && _isBase) then {
 					private ["_weaponType","_weaponTypeCategory"];
 					_weaponType = (_className call bis_fnc_itemType);
@@ -955,8 +955,8 @@ switch _mode do {
 				};
 			} foreach ("isclass _x" configclasses (configfile >> "cfgmagazines"));
 
-			missionnamespace setvariable ["bis_fnc_arsenal_data",_data];
-			["bis_fnc_arsenal_preload"] call bis_fnc_endloadingscreen;
+			missionnamespace setvariable ["qipTPL_fnc_arsenal_data",_data];
+			["qipTPL_fnc_arsenal_preload"] call bis_fnc_endloadingscreen;
 			true
 		} else {
 			false
@@ -965,17 +965,17 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "Exit": {
-		removemissioneventhandler ["draw3D",BIS_fnc_arsenal_draw3D];
+		removemissioneventhandler ["draw3D",qipTPL_fnc_arsenal_draw3D];
 
-		_target = (missionnamespace getvariable ["BIS_fnc_arsenal_target",player]);
-		_cam = uinamespace getvariable ["BIS_fnc_arsenal_cam",objnull];
+		_target = (missionnamespace getvariable ["qipTPL_fnc_arsenal_target",player]);
+		_cam = uinamespace getvariable ["qipTPL_fnc_arsenal_cam",objnull];
 		_camData = [getposatl _cam,(getposatl _cam) vectorfromto (getposatl _target)];
 		_cam cameraeffect ["terminate","back"];
 		camdestroy _cam;
 
 		//--- Select correct weapon based on animation
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_selectedWeaponType = uinamespace getvariable ["BIS_fnc_arsenal_selectedWeaponType",-1];
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_selectedWeaponType = uinamespace getvariable ["qipTPL_fnc_arsenal_selectedWeaponType",-1];
 		switch _selectedWeaponType do {
 			case 0: {_center selectweapon primaryweapon _center;};
 			case 1: {_center selectweapon secondaryweapon _center;};
@@ -984,42 +984,42 @@ switch _mode do {
 
 		//--- Restore 3DEN settings
 		if (is3DEN) then {
-			_sphere = missionnamespace getvariable ["BIS_fnc_arsenal_sphere",objnull];
-			_light = missionnamespace getvariable ["BIS_fnc_arsenal_light",objnull];
+			_sphere = missionnamespace getvariable ["qipTPL_fnc_arsenal_sphere",objnull];
+			_light = missionnamespace getvariable ["qipTPL_fnc_arsenal_light",objnull];
 			deletevehicle _center;
 			deletevehicle _sphere;
 			deletevehicle _light;
 
 			get3DENCamera cameraeffect ["internal","back"];
 			["ShowInterface",true] call bis_fnc_3DENInterface;
-			(missionnamespace getvariable ["BIS_fnc_arsenal_visionMode",0]) call bis_fnc_3DENVisionMode;
+			(missionnamespace getvariable ["qipTPL_fnc_arsenal_visionMode",0]) call bis_fnc_3DENVisionMode;
 		};
 
 		//--- Restore original camera view
-		player switchcamera BIS_fnc_arsenal_cameraview;
+		player switchcamera qipTPL_fnc_arsenal_cameraview;
 
 		showhud true;
 
-		uinamespace setvariable [format ["BIS_fnc_arsenal_campos_%1",BIS_fnc_arsenal_type],+BIS_fnc_arsenal_campos];
+		uinamespace setvariable [format ["qipTPL_fnc_arsenal_campos_%1",qipTPL_fnc_arsenal_type],+qipTPL_fnc_arsenal_campos];
 
-		BIS_fnc_arsenal_cam = nil;
-		BIS_fnc_arsenal_display = nil;
-		BIS_fnc_arsenal_type = nil;
-		BIS_fnc_arsenal_mouse = nil;
-		BIS_fnc_arsenal_buttons = nil;
-		BIS_fnc_arsenal_action = nil;
-		BIS_fnc_arsenal_campos = nil;
-		BIS_fnc_arsenal_selectedWeaponType = nil;
-		BIS_fnc_arsenal_cameraview = nil;
+		qipTPL_fnc_arsenal_cam = nil;
+		qipTPL_fnc_arsenal_display = nil;
+		qipTPL_fnc_arsenal_type = nil;
+		qipTPL_fnc_arsenal_mouse = nil;
+		qipTPL_fnc_arsenal_buttons = nil;
+		qipTPL_fnc_arsenal_action = nil;
+		qipTPL_fnc_arsenal_campos = nil;
+		qipTPL_fnc_arsenal_selectedWeaponType = nil;
+		qipTPL_fnc_arsenal_cameraview = nil;
 
-		deletevehicle (missionnamespace getvariable ["BIS_fnc_arsenal_target",objnull]);
+		deletevehicle (missionnamespace getvariable ["qipTPL_fnc_arsenal_target",objnull]);
 
 		with missionnamespace do {
-			BIS_fnc_arsenal_acctime = acctime;
-			BIS_fnc_arsenal_target = nil;
-			BIS_fnc_arsenal_center = nil;
-			BIS_fnc_arsenal_centerOrig = nil;
-			BIS_fnc_arsenal_cargo = nil;
+			qipTPL_fnc_arsenal_acctime = acctime;
+			qipTPL_fnc_arsenal_target = nil;
+			qipTPL_fnc_arsenal_center = nil;
+			qipTPL_fnc_arsenal_centerOrig = nil;
+			qipTPL_fnc_arsenal_cargo = nil;
 		};
 
 		setacctime 1;
@@ -1030,24 +1030,24 @@ switch _mode do {
 			curatorcamera cameraeffect ["internal","back"];
 		};
 		with missionnamespace do {
-			[missionnamespace,"arsenalClosed",[displaynull,uinamespace getvariable ["BIS_fnc_arsenal_toggleSpace",false]]] call bis_fnc_callscriptedeventhandler;
+			[missionnamespace,"arsenalClosed",[displaynull,uinamespace getvariable ["qipTPL_fnc_arsenal_toggleSpace",false]]] call bis_fnc_callscriptedeventhandler;
 		};
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "ListAdd": {
 		_display = _this select 0;
-		_data = missionnamespace getvariable "bis_fnc_arsenal_data";
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_cargo = (missionnamespace getvariable ["BIS_fnc_arsenal_cargo",objnull]);
+		_data = missionnamespace getvariable "qipTPL_fnc_arsenal_data";
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_cargo = (missionnamespace getvariable ["qipTPL_fnc_arsenal_cargo",objnull]);
 		_lbAdd = -1;
 		_xCfg = configfile;
 		_modList = MODLIST;
 		_fnc_addModIcon = ADDMODICON;
 		_listDefaults = [
-			[(primaryweapon _center) call bis_fnc_baseWeapon], // IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON
-			[(secondaryweapon _center) call bis_fnc_baseWeapon], // IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON
-			[(handgunweapon _center) call bis_fnc_baseWeapon], // IDC_RSCDISPLAYARSENAL_TAB_HANDGUN
+			[(primaryweapon _center) call qipTPL_fnc_baseWeapon], // IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON
+			[(secondaryweapon _center) call qipTPL_fnc_baseWeapon], // IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON
+			[(handgunweapon _center) call qipTPL_fnc_baseWeapon], // IDC_RSCDISPLAYARSENAL_TAB_HANDGUN
 			[uniform _center], // IDC_RSCDISPLAYARSENAL_TAB_UNIFORM
 			[vest _center], // IDC_RSCDISPLAYARSENAL_TAB_VEST
 			[backpack _center], // IDC_RSCDISPLAYARSENAL_TAB_BACKPACK
@@ -1185,7 +1185,7 @@ switch _mode do {
 						_faces pushback tolower configname (_x select 0);
 						_faces pushback (_x select 0);
 					} foreach _list;
-					missionnamespace setvariable ["BIS_fnc_arsenal_faces",_faces];
+					missionnamespace setvariable ["qipTPL_fnc_arsenal_faces",_faces];
 				};
 				case IDC_RSCDISPLAYARSENAL_TAB_VOICE: {
 					{
@@ -1262,18 +1262,18 @@ switch _mode do {
 			} else {
 				//lbsort _ctrlList;
 				_ctrlSort = _display displayctrl (IDC_RSCDISPLAYARSENAL_SORT + _foreachindex);
-				_sortValues = uinamespace getvariable ["bis_fnc_arsenal_sort",[]];
-				["lbSort",[[_ctrlSort,_sortValues param [_foreachindex,0]],_foreachindex]] call bis_fnc_arsenal;
+				_sortValues = uinamespace getvariable ["qipTPL_fnc_arsenal_sort",[]];
+				["lbSort",[[_ctrlSort,_sortValues param [_foreachindex,0]],_foreachindex]] call qipTPL_fnc_arsenal;
 			};
 		} foreach _data;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "ListSelectCurrent": {
-		_display = [_this,0,uinamespace getvariable ["bis_fnc_arsenal_display",displaynull],[displaynull]] call bis_fnc_paramin;
-		_data = missionnamespace getvariable "bis_fnc_arsenal_data";
-		_defaultItems = uinamespace getvariable ["bis_fnc_arsenal_defaultItems",[]];
-		_defaultShow = uinamespace getvariable ["bis_fnc_arsenal_defaultShow",-1];
+		_display = [_this,0,uinamespace getvariable ["qipTPL_fnc_arsenal_display",displaynull],[displaynull]] call bis_fnc_paramin;
+		_data = missionnamespace getvariable "qipTPL_fnc_arsenal_data";
+		_defaultItems = uinamespace getvariable ["qipTPL_fnc_arsenal_defaultItems",[]];
+		_defaultShow = uinamespace getvariable ["qipTPL_fnc_arsenal_defaultShow",-1];
 		{
 			_ctrlList = _display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _foreachindex);
 
@@ -1281,7 +1281,7 @@ switch _mode do {
 			//if (ctrltype _ctrlList == 5) then {lbsort _ctrlList;};
 
 			//--- Select current
-			_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+			_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 			_select = true;
 
 			//--- Check if some item was marked for selection manually
@@ -1296,21 +1296,21 @@ switch _mode do {
 					case IDC_RSCDISPLAYARSENAL_TAB_GOGGLES:		{goggles _center};
 					case IDC_RSCDISPLAYARSENAL_TAB_NVGS;
 					case IDC_RSCDISPLAYARSENAL_TAB_BINOCULARS:	{assigneditems _center};
-					case IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON:	{[(primaryweapon _center) call bis_fnc_baseWeapon,0,""] call bis_fnc_paramin};
-					case IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON:	{[(secondaryweapon _center) call bis_fnc_baseWeapon,0,""] call bis_fnc_paramin};
-					case IDC_RSCDISPLAYARSENAL_TAB_HANDGUN:		{[(handgunweapon _center) call bis_fnc_baseWeapon,0,""] call bis_fnc_paramin};
+					case IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON:	{[(primaryweapon _center) call qipTPL_fnc_baseWeapon,0,""] call bis_fnc_paramin};
+					case IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON:	{[(secondaryweapon _center) call qipTPL_fnc_baseWeapon,0,""] call bis_fnc_paramin};
+					case IDC_RSCDISPLAYARSENAL_TAB_HANDGUN:		{[(handgunweapon _center) call qipTPL_fnc_baseWeapon,0,""] call bis_fnc_paramin};
 					case IDC_RSCDISPLAYARSENAL_TAB_MAP;
 					case IDC_RSCDISPLAYARSENAL_TAB_GPS;
 					case IDC_RSCDISPLAYARSENAL_TAB_RADIO;
 					case IDC_RSCDISPLAYARSENAL_TAB_COMPASS;
 					case IDC_RSCDISPLAYARSENAL_TAB_WATCH:		{assigneditems _center};
-					case IDC_RSCDISPLAYARSENAL_TAB_FACE:		{_center getvariable ["BIS_fnc_arsenal_face",face _center]};
+					case IDC_RSCDISPLAYARSENAL_TAB_FACE:		{_center getvariable ["qipTPL_fnc_arsenal_face",face _center]};
 					case IDC_RSCDISPLAYARSENAL_TAB_VOICE:		{speaker _center};
 					case IDC_RSCDISPLAYARSENAL_TAB_INSIGNIA:	{_center call bis_fnc_getUnitInsignia};
 					default {_select = false; ""};
 				};
 			} else {
-				if (_defaultShow < 0) then {["ShowItem",[_display,_ctrlList,_foreachindex]] spawn bis_fnc_arsenal;};
+				if (_defaultShow < 0) then {["ShowItem",[_display,_ctrlList,_foreachindex]] spawn qipTPL_fnc_arsenal;};
 				[_defaultItem select 0,0,"",[""]] call bis_fnc_paramin
 			};
 			if (_select) then {
@@ -1336,9 +1336,9 @@ switch _mode do {
 				};
 			};
 		} foreach _data;
-		if (_defaultShow >= 0) then {["ShowItem",[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _defaultShow),_defaultShow]] spawn bis_fnc_arsenal;};
-		uinamespace setvariable ["bis_fnc_arsenal_defaultItems",nil];
-		uinamespace setvariable ["bis_fnc_arsenal_defaultShow",nil];
+		if (_defaultShow >= 0) then {["ShowItem",[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _defaultShow),_defaultShow]] spawn qipTPL_fnc_arsenal;};
+		uinamespace setvariable ["qipTPL_fnc_arsenal_defaultItems",nil];
+		uinamespace setvariable ["qipTPL_fnc_arsenal_defaultShow",nil];
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -1347,11 +1347,11 @@ switch _mode do {
 		_key = _this select 1;
 
 		//--- Deselect
-		if ({count _x > 0} count BIS_fnc_arsenal_buttons == 0) then {
+		if ({count _x > 0} count qipTPL_fnc_arsenal_buttons == 0) then {
 
 			//--- When interface is hidden, reveal it
 			_shown = ctrlshown (_display displayctrl IDC_RSCDISPLAYARSENAL_CONTROLSBAR_CONTROLBAR);
-			if (!_shown || _key == 1) exitwith {['buttonInterface',[_display]] call bis_fnc_arsenal;};
+			if (!_shown || _key == 1) exitwith {['buttonInterface',[_display]] call qipTPL_fnc_arsenal;};
 
 			{
 				_idc = _x;
@@ -1395,7 +1395,7 @@ switch _mode do {
 				IDC_RSCDISPLAYARSENAL_LINETABRIGHT,
 				IDC_RSCDISPLAYARSENAL_LOADCARGO
 			];
-			if (BIS_fnc_arsenal_type == 0 || (BIS_fnc_arsenal_type == 1 && !is3DEN)) then {
+			if (qipTPL_fnc_arsenal_type == 0 || (qipTPL_fnc_arsenal_type == 1 && !is3DEN)) then {
 				_idcs append [
 					IDC_RSCDISPLAYARSENAL_INFO_INFO,
 					IDC_RSCDISPLAYARSENAL_STATS_STATS
@@ -1455,7 +1455,7 @@ switch _mode do {
 				];
 				_ctrlLineTabLeft ctrlcommit 0;
 				ctrlsetfocus _ctrlList;
-				['SelectItem',[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _idc),_idc]] call bis_fnc_arsenal;
+				['SelectItem',[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _idc),_idc]] call qipTPL_fnc_arsenal;
 			};
 
 			_ctrlIcon = _display displayctrl (IDC_RSCDISPLAYARSENAL_ICON + _idc);
@@ -1498,7 +1498,7 @@ switch _mode do {
 			IDC_RSCDISPLAYARSENAL_TAB_ITEMMUZZLE,
 			IDC_RSCDISPLAYARSENAL_TAB_ITEMBIPOD
 		];
-		if (_showItems) then {['TabSelectRight',[_display,IDC_RSCDISPLAYARSENAL_TAB_ITEMOPTIC]] call bis_fnc_arsenal;};
+		if (_showItems) then {['TabSelectRight',[_display,IDC_RSCDISPLAYARSENAL_TAB_ITEMOPTIC]] call qipTPL_fnc_arsenal;};
 
 		//--- Containers
 		_showCargo = _index in [IDC_RSCDISPLAYARSENAL_TAB_UNIFORM,IDC_RSCDISPLAYARSENAL_TAB_VEST,IDC_RSCDISPLAYARSENAL_TAB_BACKPACK];
@@ -1525,7 +1525,7 @@ switch _mode do {
 		_ctrl = _display displayctrl IDC_RSCDISPLAYARSENAL_LOADCARGO;
 		_ctrl ctrlsetfade _fadeCargo;
 		_ctrl ctrlcommit FADE_DELAY;
-		if (_showCargo) then {['TabSelectRight',[_display,IDC_RSCDISPLAYARSENAL_TAB_CARGOMAG]] call bis_fnc_arsenal;};
+		if (_showCargo) then {['TabSelectRight',[_display,IDC_RSCDISPLAYARSENAL_TAB_CARGOMAG]] call qipTPL_fnc_arsenal;};
 
 		//--- Right sidebar
 		_showRight = _showItems || _showCargo;
@@ -1541,7 +1541,7 @@ switch _mode do {
 		];
 
 		//--- Refresh weapon accessory lists
-		//['SelectItem',[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _index),_index]] call bis_fnc_arsenal;
+		//['SelectItem',[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _index),_index]] call qipTPL_fnc_arsenal;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -1598,7 +1598,7 @@ switch _mode do {
 					]
 				) then {
 					//--- Update counts for all items in the list
-					_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+					_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 					_itemsCurrent = switch true do {
 						case (ctrlenabled (_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_UNIFORM))): {uniformitems _center};
 						case (ctrlenabled (_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_VEST))): {vestitems _center};
@@ -1609,7 +1609,7 @@ switch _mode do {
 						_class = _ctrlList lnbdata [_l,0];
 						_ctrlList lnbsettext [[_l,2],str ({_x == _class} count _itemsCurrent)];
 					};
-					["SelectItemRight",[_display,_ctrlList,_index]] call bis_fnc_arsenal;
+					["SelectItemRight",[_display,_ctrlList,_index]] call qipTPL_fnc_arsenal;
 				};
 			};
 
@@ -1632,7 +1632,7 @@ switch _mode do {
 		_cursel = lbcursel _ctrlList;
 		if (_cursel < 0) exitwith {};
 		_item = if (ctrltype _ctrlList == 102) then {_ctrlList lnbdata [_cursel,0]} else {_ctrlList lbdata _cursel};
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 
 		_ctrlListPrimaryWeapon = _display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON);
 		_ctrlListSecondaryWeapon = _display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON);
@@ -1649,7 +1649,7 @@ switch _mode do {
 				};
 
 				//--- Refresh insignia (gets removed when uniform changes)
-				['SelectItem',[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_INSIGNIA),IDC_RSCDISPLAYARSENAL_TAB_INSIGNIA]] spawn bis_fnc_arsenal;
+				['SelectItem',[_display,_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_INSIGNIA),IDC_RSCDISPLAYARSENAL_TAB_INSIGNIA]] spawn qipTPL_fnc_arsenal;
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_VEST: {
 				if (_item == "") then {
@@ -1688,13 +1688,13 @@ switch _mode do {
 				};
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON: {
-				_isDifferentWeapon = (primaryweapon _center call bis_fnc_baseWeapon) != _item;
+				_isDifferentWeapon = (primaryweapon _center call qipTPL_fnc_baseWeapon) != _item;
 				if (_isDifferentWeapon) then {
 					{_center removemagazines _x} foreach getarray (configfile >> "cfgweapons" >> primaryweapon _center >> "magazines");
 					if (_item == "") then {
 						_center removeweapon primaryweapon _center;
 					} else {
-						_compatibleItems = _item call bis_fnc_compatibleItems;
+						_compatibleItems = _item call qipTPL_fnc_compatibleItems;
 						_weaponAccessories = primaryweaponitems _center - [""];
 						[_center,_item,4] call bis_fnc_addweapon;
 						{
@@ -1705,13 +1705,13 @@ switch _mode do {
 				};
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON: {
-				_isDifferentWeapon = (secondaryweapon _center call bis_fnc_baseWeapon) != _item;
+				_isDifferentWeapon = (secondaryweapon _center call qipTPL_fnc_baseWeapon) != _item;
 				if (_isDifferentWeapon) then {
 					{_center removemagazines _x} foreach getarray (configfile >> "cfgweapons" >> secondaryweapon _center >> "magazines");
 					if (_item == "") then {
 						_center removeweapon secondaryweapon _center;
 					} else {
-						_compatibleItems = _item call bis_fnc_compatibleItems;
+						_compatibleItems = _item call qipTPL_fnc_compatibleItems;
 						_weaponAccessories = secondaryweaponitems _center - [""];
 						[_center,_item,2] call bis_fnc_addweapon;
 						{
@@ -1722,13 +1722,13 @@ switch _mode do {
 				};
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_HANDGUN: {
-				_isDifferentWeapon = (handgunweapon _center call bis_fnc_baseWeapon) != _item;
+				_isDifferentWeapon = (handgunweapon _center call qipTPL_fnc_baseWeapon) != _item;
 				if (_isDifferentWeapon) then {
 					{_center removemagazines _x} foreach getarray (configfile >> "cfgweapons" >> handgunweapon _center >> "magazines");
 					if (_item == "") then {
 						_center removeweapon handgunweapon _center;
 					} else {
-						_compatibleItems = _item call bis_fnc_compatibleItems;
+						_compatibleItems = _item call qipTPL_fnc_compatibleItems;
 						_weaponAccessories = handgunitems _center - [""];
 						[_center,_item,4] call bis_fnc_addweapon;
 						{
@@ -1757,17 +1757,17 @@ switch _mode do {
 				_face = if (_item == "") then {"Default";} else {_item;};
 				//_center setface _face;
 				[[_center,_face],"bis_fnc_setidentity"] call bis_fnc_mp;
-				_center setvariable ["BIS_fnc_arsenal_face",_face];
+				_center setvariable ["qipTPL_fnc_arsenal_face",_face];
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_VOICE: {
 				_center setspeaker _item; //--- Instant preview
 				[[_center,nil,_item],"bis_fnc_setidentity"] call bis_fnc_mp; //--- Broadcasted, and therefore delayed setting
 				if (ctrlenabled (_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + IDC_RSCDISPLAYARSENAL_TAB_VOICE))) then {
-					if !(isnil "BIS_fnc_arsenal_voicePreview") then {terminate BIS_fnc_arsenal_voicePreview;};
-					BIS_fnc_arsenal_voicePreview = [] spawn {
-						scriptname "BIS_fnc_arsenal_voicePreview";
+					if !(isnil "qipTPL_fnc_arsenal_voicePreview") then {terminate qipTPL_fnc_arsenal_voicePreview;};
+					qipTPL_fnc_arsenal_voicePreview = [] spawn {
+						scriptname "qipTPL_fnc_arsenal_voicePreview";
 						sleep 0.6;
-						_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+						_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 						_center directsay "CuratorObjectPlaced";
 					};
 				};
@@ -1820,7 +1820,7 @@ switch _mode do {
 			&&
 			ctrlenabled (_display displayctrl (IDC_RSCDISPLAYARSENAL_LIST + _index))
 		) then {
-			_cargo = (missionnamespace getvariable ["BIS_fnc_arsenal_cargo",objnull]);
+			_cargo = (missionnamespace getvariable ["qipTPL_fnc_arsenal_cargo",objnull]);
 			GETVIRTUALCARGO
 
 			_itemsCurrent = [];
@@ -1882,7 +1882,7 @@ switch _mode do {
 						_class = _ctrlList lnbdata [_l,0];
 						_ctrlList lnbsettext [[_l,2],str ({_x == _class} count _itemsCurrent)];
 					};
-					["SelectItemRight",[_display,_ctrlList,_index]] call bis_fnc_arsenal;
+					["SelectItemRight",[_display,_ctrlList,_index]] call qipTPL_fnc_arsenal;
 				};
 			} foreach [
 				IDC_RSCDISPLAYARSENAL_TAB_CARGOMAG,
@@ -1902,7 +1902,7 @@ switch _mode do {
 		) then {
 			private ["_ctrlList"];
 
-			_cargo = (missionnamespace getvariable ["BIS_fnc_arsenal_cargo",objnull]);
+			_cargo = (missionnamespace getvariable ["qipTPL_fnc_arsenal_cargo",objnull]);
 			GETVIRTUALCARGO
 
 			{
@@ -1917,7 +1917,7 @@ switch _mode do {
 			];
 
 			//--- Attachments
-			_compatibleItems = _item call bis_fnc_compatibleItems;
+			_compatibleItems = _item call qipTPL_fnc_compatibleItems;
 			{
 				private ["_item"];
 				_item = _x;
@@ -1962,7 +1962,7 @@ switch _mode do {
 				if (lbcursel _ctrlList < 0) then {_ctrlList lbsetcursel 0;};
 
 				_ctrlSort = _display displayctrl (IDC_RSCDISPLAYARSENAL_SORT + _x);
-				["lbSort",[[_ctrlSort,lbcursel _ctrlSort],_x]] call bis_fnc_arsenal;
+				["lbSort",[[_ctrlSort,lbcursel _ctrlSort],_x]] call qipTPL_fnc_arsenal;
 			} foreach [
 				IDC_RSCDISPLAYARSENAL_TAB_ITEMMUZZLE,
 				IDC_RSCDISPLAYARSENAL_TAB_ITEMACC,
@@ -1981,7 +1981,7 @@ switch _mode do {
 				case IDC_RSCDISPLAYARSENAL_TAB_BACKPACK:	{configfile >> "cfgvehicles" >> _item};
 				case IDC_RSCDISPLAYARSENAL_TAB_GOGGLES:		{configfile >> "cfgglasses" >> _item};
 				case IDC_RSCDISPLAYARSENAL_TAB_FACE:		{
-					_faces = missionnamespace getvariable ["bis_fnc_arsenal_faces",[]];
+					_faces = missionnamespace getvariable ["qipTPL_fnc_arsenal_faces",[]];
 					_faceID = _faces find tolower _item;
 					if (_faceID >= 0) then {
 						_faces select (_faceID + 1);
@@ -1999,9 +1999,9 @@ switch _mode do {
 				case IDC_RSCDISPLAYARSENAL_TAB_CARGOMISC:	{configfile >> "cfgmagazines" >> _item};
 				default						{configfile >> "cfgweapons" >> _item};
 			};
-			if (BIS_fnc_arsenal_type == 0 || (BIS_fnc_arsenal_type == 1 && !is3DEN)) then {
-				["ShowItemInfo",[_itemCfg]] call bis_fnc_arsenal;
-				["ShowItemStats",[_itemCfg]] call bis_fnc_arsenal;
+			if (qipTPL_fnc_arsenal_type == 0 || (qipTPL_fnc_arsenal_type == 1 && !is3DEN)) then {
+				["ShowItemInfo",[_itemCfg]] call qipTPL_fnc_arsenal;
+				["ShowItemStats",[_itemCfg]] call qipTPL_fnc_arsenal;
 			};
 		};
 	};
@@ -2011,7 +2011,7 @@ switch _mode do {
 		_display = _this select 0;
 		_ctrlList = _this select 1;
 		_index = _this select 2;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 
 		//--- Get container
 		_indexLeft = -1;
@@ -2171,7 +2171,7 @@ switch _mode do {
 				case IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON;
 				case IDC_RSCDISPLAYARSENAL_TAB_HANDGUN: {
 					_ctrlStats ctrlsetfade 0;
-					_statsExtremes = uinamespace getvariable "bis_fnc_arsenal_weaponStats";
+					_statsExtremes = uinamespace getvariable "qipTPL_fnc_arsenal_weaponStats";
 					if !(isnil "_statsExtremes") then {
 						_statsMin = _statsExtremes select 0;
 						_statsMax = _statsExtremes select 1;
@@ -2214,7 +2214,7 @@ switch _mode do {
 				case IDC_RSCDISPLAYARSENAL_TAB_BACKPACK;
 				case IDC_RSCDISPLAYARSENAL_TAB_HEADGEAR: {
 					_ctrlStats ctrlsetfade 0;
-					_statsExtremes = uinamespace getvariable "bis_fnc_arsenal_equipmentStats";
+					_statsExtremes = uinamespace getvariable "qipTPL_fnc_arsenal_equipmentStats";
 					if !(isnil "_statsExtremes") then {
 						_statsMin = _statsExtremes select 0;
 						_statsMax = _statsExtremes select 1;
@@ -2266,7 +2266,7 @@ switch _mode do {
 		_cursel = lbcursel _ctrlList;
 		if (_cursel < 0) exitwith {};
 		_item = _ctrlList lbdata _cursel;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 
 		_action = "";
 		switch _index do {
@@ -2285,17 +2285,17 @@ switch _mode do {
 			case IDC_RSCDISPLAYARSENAL_TAB_PRIMARYWEAPON: {
 				_center selectweapon primaryweapon _center;
 				_action = if (_item == "") then {"Civil"} else {"PrimaryWeapon"};
-				BIS_fnc_arsenal_selectedWeaponType = 0;
+				qipTPL_fnc_arsenal_selectedWeaponType = 0;
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_SECONDARYWEAPON: {
 				_center selectweapon secondaryweapon _center;
 				_action = if (_item == "") then {"Civil"} else {"SecondaryWeapon"};
-				BIS_fnc_arsenal_selectedWeaponType = 1;
+				qipTPL_fnc_arsenal_selectedWeaponType = 1;
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_HANDGUN: {
 				_center selectweapon handgunweapon _center;
 				_action = if (_item == "") then {"Civil"} else {"HandGunOn"};
-				BIS_fnc_arsenal_selectedWeaponType = 2;
+				qipTPL_fnc_arsenal_selectedWeaponType = 2;
 			};
 			case IDC_RSCDISPLAYARSENAL_TAB_MAP;
 			case IDC_RSCDISPLAYARSENAL_TAB_GPS;
@@ -2314,9 +2314,9 @@ switch _mode do {
 			};
 		};
 
-		if (_action != "" && _action != BIS_fnc_arsenal_action) then {
+		if (_action != "" && _action != qipTPL_fnc_arsenal_action) then {
 			if (simulationenabled _center) then {_center playactionnow _action;} else {_center switchaction _action;};
-			BIS_fnc_arsenal_action = _action;
+			qipTPL_fnc_arsenal_action = _action;
 		};
 	};
 
@@ -2344,9 +2344,9 @@ switch _mode do {
 		};
 
 		//--- Store sort type for persistent use
-		_sortValues = uinamespace getvariable ["bis_fnc_arsenal_sort",[]];
+		_sortValues = uinamespace getvariable ["qipTPL_fnc_arsenal_sort",[]];
 		_sortValues set [_idc,_sort];
-		uinamespace setvariable ["bis_fnc_arsenal_sort",_sortValues];
+		uinamespace setvariable ["qipTPL_fnc_arsenal_sort",_sortValues];
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -2356,7 +2356,7 @@ switch _mode do {
 		_shift = _this select 2;
 		_ctrl = _this select 3;
 		_alt = _this select 4;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 		_return = false;
 		_ctrlTemplate = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_TEMPLATE;
 		_inTemplate = ctrlfade _ctrlTemplate == 0;
@@ -2371,7 +2371,7 @@ switch _mode do {
 					_ctrlMouseBlock = _display displayctrl IDC_RSCDISPLAYARSENAL_MOUSEBLOCK;
 					_ctrlMouseBlock ctrlenable false;
 				} else {
-					if (_fullVersion) then {["buttonClose",[_display]] spawn bis_fnc_arsenal;} else {_display closedisplay 2;};
+					if (_fullVersion) then {["buttonClose",[_display]] spawn qipTPL_fnc_arsenal;} else {_display closedisplay 2;};
 				};
 				_return = true;
 			};
@@ -2380,8 +2380,8 @@ switch _mode do {
 			case (_key in [DIK_RETURN,DIK_NUMPADENTER]): {
 				_ctrlTemplate = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_TEMPLATE;
 				if (ctrlfade _ctrlTemplate == 0) then {
-					if (BIS_fnc_arsenal_type == 0) then {
-						["buttonTemplateOK",[_display]] spawn bis_fnc_arsenal;
+					if (qipTPL_fnc_arsenal_type == 0) then {
+						["buttonTemplateOK",[_display]] spawn qipTPL_fnc_arsenal;
 					} else {
 						["buttonTemplateOK",[_display]] spawn bis_fnc_garage;
 					};
@@ -2412,8 +2412,8 @@ switch _mode do {
 				} foreach [IDCS_LEFT];
 				_idcCount = {!isnull (_display displayctrl (IDC_RSCDISPLAYARSENAL_TAB + _x))} count [IDCS_LEFT];
 				_idc = if (_ctrl) then {(_idc - 1 + _idcCount) % _idcCount} else {(_idc + 1) % _idcCount};
-				if (BIS_fnc_arsenal_type == 0) then {
-					["TabSelectLeft",[_display,_idc]] call bis_fnc_arsenal;
+				if (qipTPL_fnc_arsenal_type == 0) then {
+					["TabSelectLeft",[_display,_idc]] call qipTPL_fnc_arsenal;
 				} else {
 					["TabSelectLeft",[_display,_idc]] call bis_fnc_garage;
 				};
@@ -2423,41 +2423,41 @@ switch _mode do {
 			//--- Export to script
 			case (_key == DIK_C): {
 				_mode = if (_shift) then {"config"} else {"init"};
-				if (BIS_fnc_arsenal_type == 0) then {
-					if (_ctrl) then {['buttonExport',[_display,_mode]] call bis_fnc_arsenal;};
+				if (qipTPL_fnc_arsenal_type == 0) then {
+					if (_ctrl) then {['buttonExport',[_display,_mode]] call qipTPL_fnc_arsenal;};
 				} else {
 					if (_ctrl) then {['buttonExport',[_display,_mode]] call bis_fnc_garage;};
 				};
 			};
 			//--- Export from script
 			case (_key == DIK_V): {
-				if (BIS_fnc_arsenal_type == 0) then {
-					if (_ctrl) then {['buttonImport',[_display]] call bis_fnc_arsenal;};
+				if (qipTPL_fnc_arsenal_type == 0) then {
+					if (_ctrl) then {['buttonImport',[_display]] call qipTPL_fnc_arsenal;};
 				} else {
 					if (_ctrl) then {['buttonImport',[_display]] call bis_fnc_garage;};
 				};
 			};
 			//--- Save
 			case (_key == DIK_S): {
-				if (_ctrl) then {['buttonSave',[_display]] call bis_fnc_arsenal;};
+				if (_ctrl) then {['buttonSave',[_display]] call qipTPL_fnc_arsenal;};
 			};
 			//--- Open
 			case (_key == DIK_O): {
-				if (_ctrl) then {['buttonLoad',[_display]] call bis_fnc_arsenal;};
+				if (_ctrl) then {['buttonLoad',[_display]] call qipTPL_fnc_arsenal;};
 			};
 			//--- Randomize
 			case (_key == DIK_R): {
 				if (_ctrl) then {
-					if (BIS_fnc_arsenal_type == 0) then {
+					if (qipTPL_fnc_arsenal_type == 0) then {
 						if (_shift) then {
 							_soldiers = [];
 							{
 								_soldiers set [count _soldiers,configname _x];
 							} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
 							[_center,_soldiers call bis_fnc_selectrandom] call bis_fnc_loadinventory;
-							["ListSelectCurrent",[_display]] call bis_fnc_arsenal;
+							["ListSelectCurrent",[_display]] call qipTPL_fnc_arsenal;
 						}else {
-							['buttonRandom',[_display]] call bis_fnc_arsenal;
+							['buttonRandom',[_display]] call qipTPL_fnc_arsenal;
 						};
 					} else {
 						['buttonRandom',[_display]] call bis_fnc_garage;
@@ -2466,7 +2466,7 @@ switch _mode do {
 			};
 			//--- Toggle interface
 			case (_key == DIK_BACKSPACE && !_inTemplate): {
-				['buttonInterface',[_display]] call bis_fnc_arsenal;
+				['buttonInterface',[_display]] call qipTPL_fnc_arsenal;
 				_return = true;
 			};
 
@@ -2483,9 +2483,9 @@ switch _mode do {
 
 			//--- Vision mode
 			case (_key in (actionkeys "nightvision") && !_inTemplate): {
-				_mode = missionnamespace getvariable ["BIS_fnc_arsenal_visionMode",-1];
+				_mode = missionnamespace getvariable ["qipTPL_fnc_arsenal_visionMode",-1];
 				_mode = (_mode + 1) % 3;
-				missionnamespace setvariable ["BIS_fnc_arsenal_visionMode",_mode];
+				missionnamespace setvariable ["qipTPL_fnc_arsenal_visionMode",_mode];
 				switch _mode do {
 					//--- Normal
 					case 0: {
@@ -2512,7 +2512,7 @@ switch _mode do {
 			case (_key == DIK_DELETE): {
 				_ctrlMouseBlock = _display displayctrl IDC_RSCDISPLAYARSENAL_MOUSEBLOCK;
 				if !(ctrlenabled _ctrlMouseBlock) then {
-					['buttonTemplateDelete',[_display]] call bis_fnc_arsenal;
+					['buttonTemplateDelete',[_display]] call qipTPL_fnc_arsenal;
 					_return = true;
 				};
 			};
@@ -2523,7 +2523,7 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "buttonCargo": {
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 		_display = _this select 0;
 		_add = _this select 1;
 
@@ -2567,13 +2567,13 @@ switch _mode do {
 		//_ctrlList lnbsetvalue [[_lbcursel,0],_value];
 		_ctrlList lnbsettext [[_lbcursel,2],str _value];
 
-		["SelectItemRight",[_display,_ctrlList,_index]] call bis_fnc_arsenal;
+		["SelectItemRight",[_display,_ctrlList,_index]] call qipTPL_fnc_arsenal;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "buttonTemplateOK": {
 		_display = _this select 0;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 		_hideTemplate = true;
 
 		_ctrlTemplateName = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_EDITNAME;
@@ -2583,7 +2583,7 @@ switch _mode do {
 				_center,
 				[profilenamespace,ctrltext _ctrlTemplateName],
 				[
-					_center getvariable ["BIS_fnc_arsenal_face",face _center],
+					_center getvariable ["qipTPL_fnc_arsenal_face",face _center],
 					speaker _center,
 					_center call bis_fnc_getUnitInsignia
 				]
@@ -2597,19 +2597,19 @@ switch _mode do {
 
 				//--- Load custom data
 				_ctrlTemplateValue = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_VALUENAME;
-				_data = profilenamespace getvariable ["bis_fnc_saveInventory_data",[]];
+				_data = profilenamespace getvariable ["qipTPL_fnc_saveInventory_data",[]];
 				_name = _ctrlTemplateValue lnbtext [lnbcurselrow _ctrlTemplateValue,0];
 				_nameID = _data find _name;
 				if (_nameID >= 0) then {
 					_inventory = _data select (_nameID + 1);
 					_inventoryCustom = _inventory select 10;
 					_center setface (_inventoryCustom select 0);
-					_center setvariable ["BIS_fnc_arsenal_face",(_inventoryCustom select 0)];
+					_center setvariable ["qipTPL_fnc_arsenal_face",(_inventoryCustom select 0)];
 					_center setspeaker (_inventoryCustom select 1);
 					[_center,_inventoryCustom select 2] call bis_fnc_setUnitInsignia;
 				};
 
-				["ListSelectCurrent",[_display]] call bis_fnc_arsenal;
+				["ListSelectCurrent",[_display]] call qipTPL_fnc_arsenal;
 			} else {
 				_hideTemplate = false;
 			};
@@ -2644,11 +2644,11 @@ switch _mode do {
 		_ctrlTemplateValue = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_VALUENAME;
 		_cursel = lnbcurselrow _ctrlTemplateValue;
 		_name = _ctrlTemplateValue lnbtext [_cursel,0];
-		[_center,[profilenamespace,_name],nil,true] call (uinamespace getvariable (["bis_fnc_saveInventory","bis_fnc_saveVehicle"] select BIS_fnc_arsenal_type));
-		['showTemplates',[_display]] call (uinamespace getvariable (["bis_fnc_arsenal","bis_fnc_garage"] select BIS_fnc_arsenal_type));
+		[_center,[profilenamespace,_name],nil,true] call (uinamespace getvariable (["qipTPL_fnc_saveInventory","bis_fnc_saveVehicle"] select qipTPL_fnc_arsenal_type));
+		['showTemplates',[_display]] call (uinamespace getvariable (["qipTPL_fnc_arsenal","bis_fnc_garage"] select qipTPL_fnc_arsenal_type));
 		_ctrlTemplateValue lnbsetcurselrow (_cursel max (lbsize _ctrlTemplateValue - 1));
 
-		["templateSelChanged",[_display]] call bis_fnc_arsenal;
+		["templateSelChanged",[_display]] call qipTPL_fnc_arsenal;
 /*
 		_enableButtons = (lnbsize _ctrlTemplateValue select 0) > 0;
 		_ctrlTemplateButtonOK = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_BUTTONOK;
@@ -2680,9 +2680,9 @@ switch _mode do {
 		_display = _this select 0;
 		_ctrlTemplateValue = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_VALUENAME;
 		lnbclear _ctrlTemplateValue;
-		_data = profilenamespace getvariable ["bis_fnc_saveInventory_data",[]];
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_cargo = (missionnamespace getvariable ["BIS_fnc_arsenal_cargo",objnull]);
+		_data = profilenamespace getvariable ["qipTPL_fnc_saveInventory_data",[]];
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_cargo = (missionnamespace getvariable ["qipTPL_fnc_arsenal_cargo",objnull]);
 
 		GETVIRTUALCARGO
 
@@ -2740,16 +2740,16 @@ switch _mode do {
 		};
 		_ctrlTemplateValue lnbsort [0,false];
 
-		["templateSelChanged",[_display]] call bis_fnc_arsenal;
-		//['buttonExport',[_display]] call bis_fnc_arsenal;
+		["templateSelChanged",[_display]] call qipTPL_fnc_arsenal;
+		//['buttonExport',[_display]] call qipTPL_fnc_arsenal;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "buttonImport": {
 		startloadingscreen [""];
 		_display = _this select 0;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-		_cargo = (missionnamespace getvariable ["BIS_fnc_arsenal_cargo",objnull]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+		_cargo = (missionnamespace getvariable ["qipTPL_fnc_arsenal_cargo",objnull]);
 
 		GETVIRTUALCARGO
 
@@ -2847,7 +2847,7 @@ switch _mode do {
 					};
 
 					case "setface": {
-						if (_fullVersion) then {_center setface _item; _center setvariable ["BIS_fnc_arsenal_face",_item];};
+						if (_fullVersion) then {_center setface _item; _center setvariable ["qipTPL_fnc_arsenal_face",_item];};
 					};
 					case "setspeaker": {
 						if (_fullVersion) then {_center setspeaker _item;};
@@ -2861,11 +2861,11 @@ switch _mode do {
 
 		//--- Show unavailable items
 		if (count _disabledItems > 0) then {
-			['showMessage',[_display,localize "STR_A3_RscDisplayArsenal_message_unavailable"]] call bis_fnc_arsenal;
+			['showMessage',[_display,localize "STR_A3_RscDisplayArsenal_message_unavailable"]] call qipTPL_fnc_arsenal;
 		};
 
-		["ListSelectCurrent",[_display]] call bis_fnc_arsenal;
-		//["templateSelChanged",[_display]] call bis_fnc_arsenal;
+		["ListSelectCurrent",[_display]] call qipTPL_fnc_arsenal;
+		//["templateSelChanged",[_display]] call qipTPL_fnc_arsenal;
 		endloadingscreen;
 	};
 
@@ -2873,17 +2873,17 @@ switch _mode do {
 	case "buttonExport": {
 		_display = _this select 0;
 		_exportMode = _this select 1;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 
 		_export = [_center,_exportMode,_fullVersion] call qipTPL_fnc_exportInventory;
 		_export spawn {copytoclipboard _this;};
-		['showMessage',[_display,localize "STR_a3_RscDisplayArsenal_message_clipboard"]] call bis_fnc_arsenal;
+		['showMessage',[_display,localize "STR_a3_RscDisplayArsenal_message_clipboard"]] call qipTPL_fnc_arsenal;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "buttonLoad": {
 		_display = _this select 0;
-		['showTemplates',[_display]] call (uinamespace getvariable (["bis_fnc_arsenal","bis_fnc_garage"] select BIS_fnc_arsenal_type));
+		['showTemplates',[_display]] call (uinamespace getvariable (["qipTPL_fnc_arsenal","bis_fnc_garage"] select qipTPL_fnc_arsenal_type));
 
 		_ctrlTemplate = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_TEMPLATE;
 		_ctrlTemplate ctrlsetfade 0;
@@ -2919,7 +2919,7 @@ switch _mode do {
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "buttonSave": {
 		_display = _this select 0;
-		['showTemplates',[_display]] call (uinamespace getvariable (["bis_fnc_arsenal","bis_fnc_garage"] select BIS_fnc_arsenal_type));//bis_fnc_arsenal;
+		['showTemplates',[_display]] call (uinamespace getvariable (["qipTPL_fnc_arsenal","bis_fnc_garage"] select qipTPL_fnc_arsenal_type));//qipTPL_fnc_arsenal;
 
 		_ctrlTemplate = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_TEMPLATE;
 		_ctrlTemplate ctrlsetfade 0;
@@ -2947,13 +2947,13 @@ switch _mode do {
 		_ctrlTemplateButtonDelete = _display displayctrl IDC_RSCDISPLAYARSENAL_TEMPLATE_BUTTONDELETE;
 		_ctrlTemplateButtonDelete ctrlenable ((lnbsize _ctrlTemplateValue select 0) > 0);
 
-		['showMessage',[_display,localize "STR_A3_RscDisplayArsenal_message_save"]] call bis_fnc_arsenal;
+		['showMessage',[_display,localize "STR_A3_RscDisplayArsenal_message_save"]] call qipTPL_fnc_arsenal;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "buttonRandom": {
 		_display = _this select 0;
-		_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
+		_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
 
 		//--- Left sidebar
 		{
@@ -3039,10 +3039,10 @@ switch _mode do {
 			IDC_RSCDISPLAYARSENAL_SPACE_SPACEARSENAL,
 			IDC_RSCDISPLAYARSENAL_SPACE_SPACEGARAGE
 		] find (ctrlidc _ctrlButton);
-		_function = ["bis_fnc_arsenal","bis_fnc_garage"] select _buttonID;
-		BIS_fnc_arsenal_toggleSpace = true;
+		_function = ["qipTPL_fnc_arsenal","bis_fnc_garage"] select _buttonID;
+		qipTPL_fnc_arsenal_toggleSpace = true;
 		_display closedisplay 2;
-		//missionnamespace setvariable ["BIS_fnc_arsenal_target",player];
+		//missionnamespace setvariable ["qipTPL_fnc_arsenal_target",player];
 		_function spawn {
 			["Open",true] call (uinamespace getvariable _this);
 		};
@@ -3060,8 +3060,8 @@ switch _mode do {
 
 		//--- Apply the loadout on all selected objects
 		if (is3DEN) then {
-			_center = (missionnamespace getvariable ["BIS_fnc_arsenal_center",player]);
-			_inventory = [_center,[_center,"arsenal"]] call bis_fnc_saveInventory;
+			_center = (missionnamespace getvariable ["qipTPL_fnc_arsenal_center",player]);
+			_inventory = [_center,[_center,"arsenal"]] call qipTPL_fnc_saveInventory;
 			{
 				[_x,[_center,"arsenal"]] call bis_fnc_loadInventory;
 			} foreach (get3DENSelected "object");
@@ -3094,7 +3094,7 @@ switch _mode do {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "showMessage": {
-		if !(isnil {missionnamespace getvariable "BIS_fnc_arsenal_message"}) then {terminate (missionnamespace getvariable "BIS_fnc_arsenal_message")};
+		if !(isnil {missionnamespace getvariable "qipTPL_fnc_arsenal_message"}) then {terminate (missionnamespace getvariable "qipTPL_fnc_arsenal_message")};
 
 		_spawn = _this spawn {
 			disableserialization;
@@ -3111,7 +3111,7 @@ switch _mode do {
 			_ctrlMessage ctrlsetfade 1;
 			_ctrlMessage ctrlcommit FADE_DELAY;
 		};
-		missionnamespace setvariable ["BIS_fnc_arsenal_message",_spawn];
+		missionnamespace setvariable ["qipTPL_fnc_arsenal_message",_spawn];
 	};
 
 
@@ -3123,48 +3123,48 @@ switch _mode do {
 		_condition = [_this,2,{true},[{}]] call bis_fnc_param;
 
 		if ({} isequalto {}) then {
-			_box setvariable ["bis_fnc_arsenal_condition",_condition,true];
+			_box setvariable ["qipTPL_fnc_arsenal_condition",_condition,true];
 		};
 
 		if (_allowAll) then {
-			[_box,true,true,false] call bis_fnc_addVirtualWeaponCargo;
-			[_box,true,true,false] call bis_fnc_addVirtualMagazineCargo;
-			[_box,true,true,false] call bis_fnc_addVirtualItemCargo;
-			[_box,true,true,false] call bis_fnc_addVirtualBackpackCargo;
+			[_box,true,true,false] call qipTPL_fnc_addVirtualWeaponCargo;
+			[_box,true,true,false] call qipTPL_fnc_addVirtualMagazineCargo;
+			[_box,true,true,false] call qipTPL_fnc_addVirtualItemCargo;
+			[_box,true,true,false] call qipTPL_fnc_addVirtualBackpackCargo;
 		};
-		[["AmmoboxServer",_box,true],"bis_fnc_arsenal",false] call bis_fnc_mp;
+		[["AmmoboxServer",_box,true],"qipTPL_fnc_arsenal",false] call bis_fnc_mp;
 	};
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "AmmoboxExit": {
 		private ["_box"];
 		_box = [_this,0,objnull,[objnull]] call bis_fnc_param;
-		[["AmmoboxServer",_box,false],"bis_fnc_arsenal",false] call bis_fnc_mp;
+		[["AmmoboxServer",_box,false],"qipTPL_fnc_arsenal",false] call bis_fnc_mp;
 	};
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "AmmoboxServer": {
 		_box = [_this,0,objnull,[objnull]] call bis_fnc_param;
 		_add = [_this,1,true,[true]] call bis_fnc_param;
 
-		_boxes = missionnamespace getvariable ["bis_fnc_arsenal_boxes",[]];
+		_boxes = missionnamespace getvariable ["qipTPL_fnc_arsenal_boxes",[]];
 		_boxes = _boxes - [_box];
 		if (_add) then {_boxes = _boxes + [_box];};
-		missionnamespace setvariable ["bis_fnc_arsenal_boxes",_boxes];
-		publicvariable "bis_fnc_arsenal_boxes";
+		missionnamespace setvariable ["qipTPL_fnc_arsenal_boxes",_boxes];
+		publicvariable "qipTPL_fnc_arsenal_boxes";
 
-		["AmmoboxLocal","bis_fnc_arsenal",true,isnil "bis_fnc_arsenal_ammoboxServer"] call bis_fnc_mp;
-		bis_fnc_arsenal_ammoboxServer = true;
+		["AmmoboxLocal","qipTPL_fnc_arsenal",true,isnil "qipTPL_fnc_arsenal_ammoboxServer"] call bis_fnc_mp;
+		qipTPL_fnc_arsenal_ammoboxServer = true;
 	};
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "AmmoboxLocal": {
-		_boxes = missionnamespace getvariable ["bis_fnc_arsenal_boxes",[]];
+		_boxes = missionnamespace getvariable ["qipTPL_fnc_arsenal_boxes",[]];
 		{
-			if (isnil {_x getvariable "bis_fnc_arsenal_action"}) then {
+			if (isnil {_x getvariable "qipTPL_fnc_arsenal_action"}) then {
 				_action = _x addaction [
 					localize "STR_A3_Arsenal",
 					{
 						_box = _this select 0;
 						_unit = _this select 1;
-						["Open",[nil,_box,_unit]] call bis_fnc_arsenal;
+						["Open",[nil,_box,_unit]] call qipTPL_fnc_arsenal;
 					},
 					[],
 					6,
@@ -3172,16 +3172,16 @@ switch _mode do {
 					false,
 					"",
 					"
-						_cargo = _target getvariable ['bis_addVirtualWeaponCargo_cargo',[[],[],[],[]]];
+						_cargo = _target getvariable ['qipTPL_addVirtualWeaponCargo_cargo',[[],[],[],[]]];
 						if ({count _x > 0} count _cargo == 0) then {
-							_target removeaction (_target getvariable ['bis_fnc_arsenal_action',-1]);
-							_target setvariable ['bis_fnc_arsenal_action',nil];
+							_target removeaction (_target getvariable ['qipTPL_fnc_arsenal_action',-1]);
+							_target setvariable ['qipTPL_fnc_arsenal_action',nil];
 						};
-						_condition = _target getvariable ['bis_fnc_arsenal_condition',{true}];
+						_condition = _target getvariable ['qipTPL_fnc_arsenal_condition',{true}];
 						alive _target && {_target distance _this < 5 && {vehicle _this == _this}} && {call _condition}
 					"
 				];
-				_x setvariable ["bis_fnc_arsenal_action",_action];
+				_x setvariable ["qipTPL_fnc_arsenal_action",_action];
 			};
 		} foreach _boxes;
 	};
