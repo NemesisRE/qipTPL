@@ -82,7 +82,7 @@ class Mission
 			vehicle="Land_CargoBox_V1_F";
 			skill=0.60000002;
 			text="box_all";
-			init="null = this execVM ""XLA_arsenal_all.sqf""";
+			init="0 = [""AmmoboxInit"",[this,true]] spawn qipTPL_fnc_arsenal;";
 		};
 	};
 	class Markers
