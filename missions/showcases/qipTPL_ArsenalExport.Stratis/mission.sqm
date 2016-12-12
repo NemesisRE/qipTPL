@@ -66,6 +66,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					rank="CORPORAL";
 					skill=0.44999999;
+					init="this addAction [""Export Inventory"", {[] call qipTPL_fnc_exportInventory;}];";
 				};
 			};
 		};
@@ -82,7 +83,7 @@ class Mission
 			vehicle="Land_CargoBox_V1_F";
 			skill=0.60000002;
 			text="box_all";
-			init="0 = [""AmmoboxInit"",[this,true]] spawn qipTPL_fnc_arsenal;";
+			init="0 = [""AmmoboxInit"",[this,true]] spawn qipTPL_fnc_arsenal;this addAction [""Export Inventory"", {[] call qipTPL_fnc_exportInventory;}];";
 		};
 	};
 	class Markers
