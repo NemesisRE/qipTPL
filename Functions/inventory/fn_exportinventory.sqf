@@ -8,11 +8,22 @@
 	STRING - Class code
 */
 
-
 _center = player;
 _br = tostring [13,10];
-_export = "";
+_tab = toString [9];
+_fnc_addArray = {
+    _name = _this select 0;
+    _array = _this select 1;
 
+    _export = _export + _tab + format ["%1[] = {",_name];
+    {
+        if (_foreachindex > 0) then {_export = _export + ",";};
+        _export = _export + format ["""%1""",_x];
+    } foreach _array;
+    _export = _export + "};" + _br;
+};
+
+_export = "";
 _export = _export + format ["// Exported with qipTPL Arsenal by %1",profilename] + _br;
 _export = _export + "class LOADOUTNAME {" + _br;
 _export = _export + _tab + "items[] = {};" + _br;
@@ -36,4 +47,5 @@ _export = _export + _tab + format ["handgunWeapon = ""%1"";",handgunweapon _cent
 ["linkedItems",assigneditems _center - [binocular _center, hmd _center]] call _fnc_addArray;
 _export = _export + "};" + _br;
 //--- Export to clipboard
-copytoclipboard _export;
+_export spawn {copytoclipboard _this;};
+['showMessage',[_display,localize "STR_a3_RscDisplayArsenal_message_clipboard"]] call BIS_fnc_arsenal;
