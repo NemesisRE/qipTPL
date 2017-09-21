@@ -5,8 +5,4 @@ diag_log "Init - executing initScripts.sqf"; // Reporting. Do NOT edit/remove
 
 if (!mod_ACE3) then {
 	[] execVM "\qipTPL\3rdPartyScripts\NRE_earplugs.sqf"; // Earplugs
-	[] execVM "\qipTPL\3rdPartyScripts\zlt_fieldrepair.sqf"; // Realistic repair script
-	[] execVM "\qipTPL\3rdPartyScripts\zlt_fastrope.sqf"; // Helicopter fastrope script by zealot111
 };
-[] execVM "\qipTPL\3rdPartyScripts\IntLight.sqf"; // Interior Lighting
-[] execVM "\qipTPL\3rdPartyScripts\breathfog.sqf";

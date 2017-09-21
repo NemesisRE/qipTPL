@@ -12,7 +12,6 @@ if (!isDedicated && (isNull player)) then {
 	waitUntil {!(isNull player)};
 };
 call compile preprocessFileLineNumbers ("\qipTPL\qipTPL_config.sqf");
-call compile preprocessFileLineNumbers ("qipTPL\Config\tfrSettings.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\briefing.sqf");
 call compile preprocessFileLineNumbers ("\qipTPL\init\tplCredits.sqf");

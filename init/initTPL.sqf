@@ -9,6 +9,3 @@ if (mod_ACE3 && !isVirtualCurator) then {
 		[qipTPL_unit, currentWeapon qipTPL_unit, currentMuzzle qipTPL_unit] call ACE_SafeMode_fnc_lockSafety;
 	};
 };
-if (mod_Ares) then {
-	qipTPL_initAres = [] execVM "\qipTPL\init\ares\initAres.sqf";
-};
