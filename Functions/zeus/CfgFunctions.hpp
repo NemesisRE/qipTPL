@@ -2,7 +2,5 @@ class zeus
 {
 	file = "\qipTPL\Functions\zeus";
 	class isVirtualCurator{};
-	class reassignCurator{
-		postInit = 1;
-	};
+	class reassignCurator{};
 };
