@@ -9,7 +9,7 @@ if !(qipTPL_enabled) exitWith {};
 diag_log "Init - executing init.sqf"; // Reporting. Do NOT edit/remove
 
 if (!isDedicated && (isNull player)) then {
-	waitUntil {!(isNull player)};
+	waitUntil {!isNull player};
 };
 call compile preprocessFileLineNumbers ("\qipTPL\qipTPL_config.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
@@ -26,6 +26,7 @@ isVirtualCurator	= [player] call qipTPL_fnc_isVirtualCurator;
 qipTPL_unit         = (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
 qipTPL_init			= ["initTPL"] call qipTPL_fnc_paramToBool;
 qipTPL_uavIntro		= ["uavIntro"] call qipTPL_fnc_paramToBool;
+PREVIOUS_PLACED		= objNull;
 
 if !(isServer || hasInterface) then {
 	isHC					= true;
