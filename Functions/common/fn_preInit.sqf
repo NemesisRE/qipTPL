@@ -1,6 +1,6 @@
 diag_log "Init - executing initPre.sqf"; // Reporting. Do NOT edit/remove
 
-if (isNil qipTPL_enabled || !(qipTPL_enabled)) exitWith {};
+if (isNil "qipTPL_enabled" || !(qipTPL_enabled)) exitWith {};
 
 player setVariable ["BIS_noCoreConversations",true]; // Disable AI chatter.
 enableSaving [false,false]; // Disables save when aborting.

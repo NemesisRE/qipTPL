@@ -129,10 +129,10 @@ _QS_ST_showMOS = TRUE;										// BOOL. TRUE = show Military Occupational Speci
 _QS_ST_showMOS_range = 3500;								// NUMBER. Range in distance to show MOS on the map. Default 3500.
 _QS_ST_showGroupOnly = TRUE;								// BOOL. Set TRUE to show ONLY the unit icons of THE PLAYERS GROUP MEMBERS on the MAP, FALSE to show ALL your factions units. May override other config. Default TRUE.
 _QS_ST_showOnlyVehicles = FALSE;							// BOOL. Set TRUE to show ONLY vehicles, no foot-soldier units will be shown. May override other config. Default TRUE.
-_QS_ST_iconMapClickShowDetail = TRUE;						// BOOL. Set TRUE to show unit/vehicle detail when player clicks on their map near the vehicle. Only works for shown vehicles. Default TRUE.
+_QS_ST_iconMapClickShowDetail = FALSE;						// BOOL. Set TRUE to show unit/vehicle detail when player clicks on their map near the vehicle. Only works for shown vehicles. Default TRUE.
 _QS_ST_iconUpdatePulseDelay = 0;							// NUMBER. How often should location of unit on the MAP be updated? 0 = as fast as possible, else if > 0 then it = time in seconds. Default 0.
-_QS_ST_iconShadowMap = 1;									// NUMBER. Icon Shadow on MAP. 0 = no shadow. 1 = shadow. 2 = outline. Must be 0, 1, or 2. Default 1.
-_QS_ST_iconTextSize_Map = 0.05;								// NUMBER. Icon Text Size on MAP display. Default is 0.05.
+_QS_ST_iconShadowMap = 0;									// NUMBER. Icon Shadow on MAP. 0 = no shadow. 1 = shadow. 2 = outline. Must be 0, 1, or 2. Default 1.
+_QS_ST_iconTextSize_Map = 0.03;								// NUMBER. Icon Text Size on MAP display. Default is 0.05.
 _QS_ST_iconTextOffset = 'right';							// STRING. Icon Text Offset. Can be 'left' or 'center' or 'right'. Default is 'right'
 _QS_ST_iconSize_Man = 18;									// NUMBER. Icon Size by Vehicle Type. Man/Units. Default = 22
 _QS_ST_iconSize_LandVehicle = 22;							// NUMBER. Icon Size by Vehicle Type. Ground-based vehicles. Default = 26
@@ -160,7 +160,7 @@ _QS_ST_GPSDist = 300;										// NUMBER. Distance from player that units shown 
 _QS_ST_GPSshowNames = FALSE;								// BOOL. TRUE to show unit names on the GPS display. Default FALSE.
 _QS_ST_GPSshowGroupOnly = FALSE;							// BOOL. TRUE to show only group members on the GPS display. Default TRUE.
 _QS_ST_iconTextSize_GPS = 0.05;								// NUMBER. Icon Text Size on GPS display. Default is 0.05.
-_QS_ST_iconShadowGPS = 1;									// NUMBER. Icon Shadow on GPS. 0 = no shadow. 1 = shadow. 2 = outline. Must be 0, 1, or 2. Default 1.
+_QS_ST_iconShadowGPS = 0;									// NUMBER. Icon Shadow on GPS. 0 = no shadow. 1 = shadow. 2 = outline. Must be 0, 1, or 2. Default 1.
 
 //==================================================================================//
 //============================= CONFIGURE GROUP ICONS ==============================//
