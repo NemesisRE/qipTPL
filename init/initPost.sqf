@@ -15,7 +15,7 @@ _cntStop = -1;
 if (isDedicated || isHC) exitWith {};
 
 if (isVirtualCurator) exitWith {
-	[] call qipTPL_fnc_reassignCurator;
+	/* [] call qipTPL_fnc_reassignCurator;
 	/*waitUntil {!isNull getAssignedCuratorLogic player};
 	(getAssignedCuratorLogic player) addEventHandler ["CuratorObjectPlaced", {call qipTPL_fnc_fixZeusPlacing}];*/
 };
