@@ -4,31 +4,31 @@ Script Name: Soldier Tracker
 Author:
 
 	Quiksilver (contact: armacombatgroup@gmail.com)
-	
+
 Version:
 
 	2.5.0 (released 24/02/2018 A3 1.80)
 
-Created: 
+Created:
 
 	8/08/2014
-	
-Last Modified: 
+
+Last Modified:
 
 	26/02/2018 A3 1.80 by Quiksilver
-	
-Installation: 
+
+Installation:
 
 	In client/player init (initPlayerLocal.sqf)
-		
+
 		[] execVM "QS_icons.sqf";
-		
-	or 
-		
+
+	or
+
 		[] execVM "scripts\QS_icons.sqf";    (if in a folder called scripts in your mission directory.)
 
 	Follow instructions posted in the below link
-		
+
 		http://forums.bistudio.com/showthread.php?184108-Soldier-Tracker-(-Map-and-GPS-Icons-)
 _________________________________________________________________/*/
 
@@ -37,13 +37,13 @@ private [
 	'_side','_sides','_QS_ST_X','_QS_ST_map_enableUnitIcons','_QS_ST_gps_enableUnitIcons',	'_QS_ST_enableGroupIcons','_QS_ST_faction','_QS_ST_friendlySides_EAST',
 	'_QS_ST_friendlySides_WEST','_QS_ST_friendlySides_RESISTANCE','_QS_ST_friendlySides_CIVILIAN','_QS_ST_friendlySides_Dynamic','_QS_ST_iconColor_EAST','_QS_ST_iconColor_WEST',
 	'_QS_ST_iconColor_RESISTANCE','_QS_ST_iconColor_CIVILIAN','_QS_ST_iconColor_UNKNOWN','_QS_ST_showMedicalWounded','_QS_ST_MedicalSystem','_QS_ST_MedicalIconColor','_QS_ST_iconShadowMap',
-	'_QS_ST_iconShadowGPS','_QS_ST_iconTextSize_Map','_QS_ST_iconTextSize_GPS','_QS_ST_iconTextOffset','_QS_ST_iconSize_Man','_QS_ST_iconSize_LandVehicle',	
-	'_QS_ST_iconSize_Ship','_QS_ST_iconSize_Air','_QS_ST_iconSize_StaticWeapon','_QS_ST_GPSDist','_QS_ST_GPSshowNames','_QS_ST_GPSshowGroupOnly',	'_QS_ST_showAIGroups',			
-	'_QS_ST_showGroupMapIcons','_QS_ST_showGroupHudIcons','_QS_ST_groupInteractiveIcons','_QS_ST_groupInteractiveIcons_showClass','_QS_ST_dynamicGroupID',			
-	'_QS_ST_showGroupMapText','_QS_ST_groupIconScale','_QS_ST_groupIconOffset','_QS_ST_groupIconText','_QS_ST_autonomousVehicles','_QS_fnc_iconColor','_QS_fnc_iconType',				
-	'_QS_fnc_iconSize','_QS_fnc_iconPosDir','_QS_fnc_iconText','_QS_fnc_iconUnits','_QS_fnc_onMapSingleClick','_QS_fnc_mapVehicleShowCrew','_QS_fnc_iconDrawMap',			
-	'_QS_fnc_iconDrawGPS','_QS_fnc_groupIconText','_QS_fnc_groupIconType','_QS_fnc_configGroupIcon','_QS_fnc_onGroupIconClick','_QS_fnc_onGroupIconOverLeave',	
-	'_QS_ST_iconMapClickShowDetail','_QS_ST_showFriendlySides','_QS_fnc_onGroupIconOverEnter','_QS_ST_showCivilianGroups','_QS_ST_iconTextFont','_QS_ST_showAll','_QS_ST_showFactionOnly',		
+	'_QS_ST_iconShadowGPS','_QS_ST_iconTextSize_Map','_QS_ST_iconTextSize_GPS','_QS_ST_iconTextOffset','_QS_ST_iconSize_Man','_QS_ST_iconSize_LandVehicle',
+	'_QS_ST_iconSize_Ship','_QS_ST_iconSize_Air','_QS_ST_iconSize_StaticWeapon','_QS_ST_GPSDist','_QS_ST_GPSshowNames','_QS_ST_GPSshowGroupOnly',	'_QS_ST_showAIGroups',
+	'_QS_ST_showGroupMapIcons','_QS_ST_showGroupHudIcons','_QS_ST_groupInteractiveIcons','_QS_ST_groupInteractiveIcons_showClass','_QS_ST_dynamicGroupID',
+	'_QS_ST_showGroupMapText','_QS_ST_groupIconScale','_QS_ST_groupIconOffset','_QS_ST_groupIconText','_QS_ST_autonomousVehicles','_QS_fnc_iconColor','_QS_fnc_iconType',
+	'_QS_fnc_iconSize','_QS_fnc_iconPosDir','_QS_fnc_iconText','_QS_fnc_iconUnits','_QS_fnc_onMapSingleClick','_QS_fnc_mapVehicleShowCrew','_QS_fnc_iconDrawMap',
+	'_QS_fnc_iconDrawGPS','_QS_fnc_groupIconText','_QS_fnc_groupIconType','_QS_fnc_configGroupIcon','_QS_fnc_onGroupIconClick','_QS_fnc_onGroupIconOverLeave',
+	'_QS_ST_iconMapClickShowDetail','_QS_ST_showFriendlySides','_QS_fnc_onGroupIconOverEnter','_QS_ST_showCivilianGroups','_QS_ST_iconTextFont','_QS_ST_showAll','_QS_ST_showFactionOnly',
 	'_QS_ST_showAI','_QS_ST_showMOS','_QS_ST_showGroupOnly','_QS_ST_iconUpdatePulseDelay','_QS_ST_iconMapText','_QS_ST_showMOS_range',
 	'_QS_ST_iconTextFonts','_QS_fnc_isIncapacitated','_QS_ST_htmlColorMedical','_QS_ST_R','_QS_ST_showAINames','_QS_ST_AINames',
 	'_QS_ST_groupTextFactionOnly','_QS_ST_showCivilianIcons','_QS_ST_showOnlyVehicles','_QS_ST_showOwnGroup','_QS_ST_iconColor_empty',
@@ -71,7 +71,7 @@ _QS_ST_enableGroupIcons = TRUE;								// BOOL. TRUE to enable Map+GPS+HUD GROUP
 
 _QS_ST_admin = FALSE;										// BOOL. TRUE to enable showing all units (even enemies) if logged in as admin on a server. Default FALSE;
 _QS_ST_showAll = 0;											// NUMBER. Intended for Debug / Development use only! Caution: Will cause lag if 1 or 2! Settings -  0 = Disabled (Recommended). 1 = Reveal all Units + vehicles. 2 = Reveal all mission objects + vehicles + units. May override below configurations if set at 1 or 2.
-	
+
 //================= DIPLOMACY - set the Friendly factions for each faction.
 
 _QS_ST_friendlySides_Dynamic = TRUE;						// BOOL. Set TRUE to allow faction alliances to change dynamically (IE. AAF may not always be loyal to NATO) and be represented on the map. Default TRUE.
@@ -100,8 +100,8 @@ _QS_ST_friendlySides_CIVILIAN = [							// ARRAY (NUMBER). Uncomment the relevan
 
 _QS_ST_iconColor_EAST = [0.5,0,0,0.65];							// ARRAY (NUMBER). RGBA color code.	Default [0.5,0,0,0.65];
 _QS_ST_iconColor_WEST = [0,0.3,0.6,0.65];						// ARRAY (NUMBER). RGBA color code. Default [0,0.3,0.6,0.65];
-_QS_ST_iconColor_RESISTANCE = [0,0.5,0,0.65];					// ARRAY (NUMBER). RGBA color code. Default [0,0.5,0,0.65];	
-_QS_ST_iconColor_CIVILIAN = [0.4,0,0.5,0.65];					// ARRAY (NUMBER). RGBA color code. Default [0.4,0,0.5,0.65];	
+_QS_ST_iconColor_RESISTANCE = [0,0.5,0,0.65];					// ARRAY (NUMBER). RGBA color code. Default [0,0.5,0,0.65];
+_QS_ST_iconColor_CIVILIAN = [0.4,0,0.5,0.65];					// ARRAY (NUMBER). RGBA color code. Default [0.4,0,0.5,0.65];
 _QS_ST_iconColor_UNKNOWN = [0.7,0.6,0,0.5];						// ARRAY (NUMBER). RGBA color code. Default [0.7,0.6,0,0.5];
 
 //================= MEDICAL
@@ -129,7 +129,7 @@ _QS_ST_showCivilianIcons = FALSE;								// BOOL. Set TRUE to allow showing of c
 _QS_ST_iconMapText = TRUE;										// BOOL. TRUE to show unit/vehicle icon text on the map. FALSE to only show the icon and NO text (name/class). Default TRUE.
 _QS_ST_showMOS = TRUE;											// BOOL. TRUE = show Military Occupational Specialty text(unit/vehicle class/role display name), FALSE = disable and only show icons and names. Default FALSE.
 _QS_ST_showMOS_range = 3500;									// NUMBER. Range in distance to show MOS on the map. Default 3500.
-_QS_ST_showGroupOnly = FALSE;									// BOOL. Set TRUE to show ONLY the unit icons of THE PLAYERS GROUP MEMBERS on the MAP, FALSE to show ALL your factions units. May override other config. Default TRUE.
+_QS_ST_showGroupOnly = TRUE;									// BOOL. Set TRUE to show ONLY the unit icons of THE PLAYERS GROUP MEMBERS on the MAP, FALSE to show ALL your factions units. May override other config. Default TRUE.
 _QS_ST_showOnlyVehicles = FALSE;								// BOOL. Set TRUE to show ONLY vehicles, no foot-soldier units will be shown. May override other config. Default TRUE.
 _QS_ST_iconMapClickShowDetail = TRUE;							// BOOL. Set TRUE to show unit/vehicle detail when player clicks on their map near the vehicle. Only works for shown vehicles. Default TRUE.
 _QS_ST_iconUpdatePulseDelay = 0;								// NUMBER. How often should location of unit on the MAP be updated? 0 = as fast as possible, else if > 0 then it = time in seconds. Default 0.
@@ -137,7 +137,7 @@ _QS_ST_iconShadowMap = 1;										// NUMBER. Icon Shadow on MAP. 0 = no shadow.
 _QS_ST_iconTextSize_Map = 0.05;									// NUMBER. Icon Text Size on MAP display. Default is 0.05.
 _QS_ST_iconTextOffset = 'right';								// STRING. Icon Text Offset. Can be 'left' or 'center' or 'right'. Default is 'right'
 _QS_ST_iconSize_Man = 22;										// NUMBER. Icon Size by Vehicle Type. Man/Units. Default = 22
-_QS_ST_iconSize_LandVehicle = 26;								// NUMBER. Icon Size by Vehicle Type. Ground-based vehicles. Default = 26	
+_QS_ST_iconSize_LandVehicle = 26;								// NUMBER. Icon Size by Vehicle Type. Ground-based vehicles. Default = 26
 _QS_ST_iconSize_Ship = 24;										// NUMBER. Icon Size by Vehicle Type. Water-based vehicles. Default = 24
 _QS_ST_iconSize_Air = 24;										// NUMBER. Icon Size by Vehicle Type. Air vehicles. Default = 24
 _QS_ST_iconSize_StaticWeapon = 22;								// NUMBER. Icon Size by Vehicle Type. Static Weapon (Mortar, remote designator, HMG/GMG. Default = 22
@@ -161,7 +161,7 @@ _QS_ST_MAPrequireGPSItem = TRUE;								// BOOL. TRUE to require player have GPS
 
 _QS_ST_GPSDist = 300;											// NUMBER. Distance from player that units shown on GPS. Higher number = lower script performance. Not significant but every 1/10th of a frame counts! Default 300
 _QS_ST_GPSshowNames = FALSE;									// BOOL. TRUE to show unit names on the GPS display. Default FALSE.
-_QS_ST_GPSshowGroupOnly = FALSE;								// BOOL. TRUE to show only group members on the GPS display. Default TRUE.
+_QS_ST_GPSshowGroupOnly = TRUE;								// BOOL. TRUE to show only group members on the GPS display. Default TRUE.
 _QS_ST_iconTextSize_GPS = 0.05;									// NUMBER. Icon Text Size on GPS display. Default is 0.05.
 _QS_ST_iconShadowGPS = 1;										// NUMBER. Icon Shadow on GPS. 0 = no shadow. 1 = shadow. 2 = outline. Must be 0, 1, or 2. Default 1.
 _QS_ST_GPSrequireGPSItem = TRUE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
@@ -173,7 +173,7 @@ _QS_ST_GPSrequireGPSItem = TRUE;								// BOOL. TRUE to require player have GPS
 _QS_ST_showGroupMapIcons = TRUE;								// BOOL. Group icons displayed on map. Default TRUE.
 _QS_ST_showGroupHudIcons = FALSE;								// BOOL. Group icons displayed on player 3D HUD. Default FALSE.
 _QS_ST_showAIGroups = TRUE;										// BOOL. Show Groups with AI leaders. Default TRUE.
-_QS_ST_showAINames = FALSE;										// BOOL. Show AI Names. If FALSE, when names are listed with Group features, will only display as '[AI]'. Default FALSE.
+_QS_ST_showAINames = TRUE;										// BOOL. Show AI Names. If FALSE, when names are listed with Group features, will only display as '[AI]'. Default FALSE.
 _QS_ST_groupInteractiveIcons = TRUE;							// BOOL. Group icons are interactable (mouse hover and mouse click for group details). Default TRUE.
 _QS_ST_groupInteractiveIcons_showClass = TRUE;					// BOOL. TRUE to show units vehicle class when revealing group details with interactive map group click. Default TRUE.
 _QS_ST_dynamicGroupID = TRUE;									// BOOL. If TRUE, Script tries to utilize BIS-Dynamic-Groups Group Name for group info display (only available with QS_ST_groupInteractiveIcons), if available. Default TRUE. EDIT: Obsolete as of A3 1.48
@@ -379,7 +379,7 @@ _QS_fnc_iconPosDir = {
 				} else {
 					_posDir = [getPosASLVisual _v,getDirVisual _v];
 					_v setVariable ['QS_ST_lastPulsePos',_posDir,FALSE];
-				};		
+				};
 			};
 		} else {
 			_posDir = [getPosASLVisual _v,getDirVisual _v];
@@ -748,7 +748,7 @@ _QS_fnc_iconUnits = {
 					0 = _as pushBack (_si select _x);
 				} count (_QS_ST_X select 57);
 			};
-		};		
+		};
 	};
 	if (!(_QS_ST_X select 63)) then {
 		if (isMultiplayer) then {
@@ -933,7 +933,13 @@ _QS_fnc_mapVehicleShowCrew = {};
 _QS_fnc_iconDrawMap = {
 	_m = _this select 0;
 	_QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
-	if ((_QS_ST_X select 83) && (!('ItemGPS' in (assignedItems player)))) exitWith {};
+	private _hasGPSDevice = ("ACE_microDAGR" in items player) || {
+		{
+			if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]}) exitWith {true};
+			false
+		} forEach assignedItems player;
+	};
+	if ((_QS_ST_X select 83) && (!(_hasGPSDevice))) exitWith {};
 	if (diag_tickTime > (missionNamespace getVariable 'QS_ST_updateDraw_map')) then {
 		missionNamespace setVariable ['QS_ST_updateDraw_map',(diag_tickTime + 3),FALSE];
 		missionNamespace setVariable ['QS_ST_drawArray_map',([1,_QS_ST_X] call (_QS_ST_X select 46)),FALSE];
@@ -997,10 +1003,16 @@ _QS_fnc_iconDrawMap = {
 	};
 };
 _QS_fnc_iconDrawGPS = {
+	private _hasGPSDevice = ("ACE_microDAGR" in items player) || {
+		{
+			if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]}) exitWith {true};
+			false
+		} forEach assignedItems player;
+	};
 	if (
 		(!('MinimapDisplay' in ((infoPanel 'left') + (infoPanel 'right')))) ||
 		{(visibleMap)} ||
-		{((_QS_ST_X select 84) && (!('ItemGPS' in (assignedItems player))))}
+		{((_QS_ST_X select 84) && (!(_hasGPSDevice)))}
 	) exitWith {};
 	_m = _this select 0;
 	_QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
@@ -1131,19 +1143,19 @@ _QS_fnc_groupIconType = {
 	};
 	if (_vehicleClass isEqualTo 'Static') exitWith {
 		if (['mortar',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) then {
-			_iconType = _iconTypes select 10; 
+			_iconType = _iconTypes select 10;
 		} else {
-			_iconType = _iconTypes select 12; 
+			_iconType = _iconTypes select 12;
 		};
 		_grpVehicle setVariable ['QS_ST_groupVehicleIconType',_iconType,FALSE];
 		_iconType;
 	};
 	if (_vehicleClass isEqualTo 'Autonomous') exitWith {
 		if (['UAV',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) then {
-			_iconType = _iconTypes select 7; 
+			_iconType = _iconTypes select 7;
 		} else {
 			if (['UGV',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) then {
-				_iconType = _iconTypes select 12; 
+				_iconType = _iconTypes select 12;
 			};
 		};
 		_grpVehicle setVariable ['QS_ST_groupVehicleIconType',_iconType,FALSE];
@@ -1151,22 +1163,22 @@ _QS_fnc_groupIconType = {
 	};
 	if (_vehicleClass isEqualTo 'Air') exitWith {
 		if (_grpVehicle isKindOf 'Helicopter') then {
-			_iconType = _iconTypes select 5; 
+			_iconType = _iconTypes select 5;
 		} else {
-			_iconType = _iconTypes select 6; 
+			_iconType = _iconTypes select 6;
 		};
 		_grpVehicle setVariable ['QS_ST_groupVehicleIconType',_iconType,FALSE];
 		_iconType;
 	};
 	if (_vehicleClass isEqualTo 'Armored') exitWith {
 		if (['apc',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) then {
-			_iconType = _iconTypes select 2; 
+			_iconType = _iconTypes select 2;
 		} else {
 			if ((['arty',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) || {(['mlrs',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString'))}) then {
-				_iconType = _iconTypes select 9; 
+				_iconType = _iconTypes select 9;
 			} else {
 				if (['mbt',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) then {
-					_iconType = _iconTypes select 3; 
+					_iconType = _iconTypes select 3;
 				};
 			};
 		};
@@ -1174,16 +1186,16 @@ _QS_fnc_groupIconType = {
 		_iconType;
 	};
 	if (_vehicleClass isEqualTo 'Car') exitWith {
-		_iconType = _iconTypes select 1; 
+		_iconType = _iconTypes select 1;
 		_grpVehicle setVariable ['QS_ST_groupVehicleIconType',_iconType,FALSE];
 		_iconType;
 	};
 	if (_vehicleClass isEqualTo 'Support') exitWith {
 		if (['medical',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) then {
-			_iconType = _iconTypes select 8; 
+			_iconType = _iconTypes select 8;
 		} else {
 			if ((['ammo',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString')) || {(['box',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString'))} || {(['fuel',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString'))} || {(['CRV',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString'))} || {(['repair',_grpVehicle_type,FALSE] call (missionNamespace getVariable 'BIS_fnc_inString'))}) then {
-				_iconType = _iconTypes select 14; 
+				_iconType = _iconTypes select 14;
 			};
 		};
 		_grpVehicle setVariable ['QS_ST_groupVehicleIconType',_iconType,FALSE];
@@ -1207,7 +1219,7 @@ _QS_fnc_configGroupIcon = {
 	_grpSize = count (units _grp);
 	_grpSide = side _grpLeader;
 	if (_type isEqualTo 0) then {
-		_grpIconType = [_grp,_grpSize,_grpLeader_vehicle,_grpSide] call (_QS_ST_X select 52);		
+		_grpIconType = [_grp,_grpSize,_grpLeader_vehicle,_grpSide] call (_QS_ST_X select 52);
 		_grp setVariable ['QS_ST_Group',1,FALSE];
 		_iconID = _grp addGroupIcon [_grpIconType,(_QS_ST_X select 38)];
 		_grp setGroupIcon [_iconID,_grpIconType];
@@ -1235,7 +1247,7 @@ _QS_fnc_configGroupIcon = {
 		if (_update) then {
 			_grpIconColor = [_grpLeader_vehicle,_QS_ST_X] call (_QS_ST_X select 77);
 			if (_updateIcon) then {
-				_grpIconType = [_grp,_grpSize,_grpLeader_vehicle,_grpSide] call (_QS_ST_X select 52);	
+				_grpIconType = [_grp,_grpSize,_grpLeader_vehicle,_grpSide] call (_QS_ST_X select 52);
 				_grp setGroupIcon [_iconID,_grpIconType];
 			};
 			if (_updateParams) then {
@@ -1290,7 +1302,7 @@ _QS_fnc_onGroupIconClick = {
 	} else {
 		_colorIncapacitated = [1,0.41,0,1];
 		_colorInjured = [0,0,0,1];
-		_colorDead = [0.4,0,0.5,0.65];	
+		_colorDead = [0.4,0,0.5,0.65];
 	};
 	_showClass = _QS_ST_X select 34;
 	_AINames = _QS_ST_X select 72;
@@ -1321,13 +1333,13 @@ _QS_fnc_onGroupIconClick = {
 			if (_showClass) then {
 				_unitNameList = _unitNameList + format ["<t align='left'><t size='1.2'><t color='%2'>%1</t></t></t>",_unitName,_color] + format ["<t align='right'><t size='0.75'><t color='%2'>[%1]</t></t></t>",_unitMOS,_color] + '<br/>';
 			} else {
-				_unitNameList = _unitNameList + format ["<t align='left'><t size='1.2'><t color='%2'>%1</t></t></t>",_unitName,_color] + '<br/>';				
+				_unitNameList = _unitNameList + format ["<t align='left'><t size='1.2'><t color='%2'>%1</t></t></t>",_unitName,_color] + '<br/>';
 			};
 		} else {
 			if (_showClass) then {
 				_unitNameList = _unitNameList + format ["<t align='left'><t color='%2'>%1</t></t>",_unitName,_color] + format ["<t align='right'><t size='0.75'><t color='%2'>[%1]</t></t></t>",_unitMOS,_color] + '<br/>';
 			} else {
-				_unitNameList = _unitNameList + format ["<t align='left'><t color='%2'>%1</t></t>",_unitName,_color] + '<br/>';				
+				_unitNameList = _unitNameList + format ["<t align='left'><t color='%2'>%1</t></t>",_unitName,_color] + '<br/>';
 			};
 		};
 	} count (units _group);
@@ -1395,7 +1407,7 @@ _QS_ST_R = [
 	_QS_ST_friendlySides_CIVILIAN,
 	_QS_ST_friendlySides_Dynamic,
 	_QS_ST_iconColor_EAST,
-	
+
 	_QS_ST_iconColor_WEST,
 	_QS_ST_iconColor_RESISTANCE,
 	_QS_ST_iconColor_CIVILIAN,
@@ -1406,7 +1418,7 @@ _QS_ST_R = [
 	_QS_ST_iconShadowMap,
 	_QS_ST_iconShadowGPS,
 	_QS_ST_iconTextSize_Map,
-	
+
 	_QS_ST_iconTextSize_GPS,
 	_QS_ST_iconTextOffset,
 	_QS_ST_iconSize_Man,
@@ -1417,7 +1429,7 @@ _QS_ST_R = [
 	_QS_ST_GPSDist,
 	_QS_ST_GPSshowNames,
 	_QS_ST_GPSshowGroupOnly,
-	
+
 	_QS_ST_showAIGroups,
 	_QS_ST_showGroupMapIcons,
 	_QS_ST_showGroupHudIcons,
@@ -1428,7 +1440,7 @@ _QS_ST_R = [
 	_QS_ST_groupIconScale,
 	_QS_ST_groupIconOffset,
 	_QS_ST_groupIconText,
-	
+
 	_QS_ST_autonomousVehicles,
 	_QS_fnc_iconColor,
 	_QS_fnc_iconType,
@@ -1439,7 +1451,7 @@ _QS_ST_R = [
 	_QS_fnc_onMapSingleClick,
 	_QS_fnc_mapVehicleShowCrew,
 	_QS_fnc_iconDrawMap,
-	
+
 	_QS_fnc_iconDrawGPS,
 	_QS_fnc_groupIconText,
 	_QS_fnc_groupIconType,
@@ -1450,7 +1462,7 @@ _QS_ST_R = [
 	_QS_ST_showFriendlySides,
 	_QS_fnc_onGroupIconOverEnter,
 	_QS_ST_showCivilianGroups,
-	
+
 	_QS_ST_iconTextFont,
 	_QS_ST_showAll,
 	_QS_ST_showFactionOnly,
@@ -1461,7 +1473,7 @@ _QS_ST_R = [
 	_QS_ST_iconMapText,
 	_QS_ST_showMOS_range,
 	_QS_fnc_isIncapacitated,
-	
+
 	_QS_ST_htmlColorMedical,
 	_QS_ST_AINames,
 	_QS_ST_showAINames,
@@ -1472,7 +1484,7 @@ _QS_ST_R = [
 	_QS_fnc_iconColorGroup,
 	_QS_ST_iconColor_empty,
 	_QS_ST_iconSize_empty,
-	
+
 	_QS_ST_showEmptyVehicles,
 	_QS_ST_htmlColorInjured,
 	_QS_ST_otherDisplays,
@@ -1491,7 +1503,7 @@ _QS_ST_R = [
 	['QS_ST_drawArray_gps',[],FALSE]
 ];
 waitUntil {
-	uiSleep 0.1; 
+	uiSleep 0.1;
 	!(isNull (findDisplay 12))
 };
 _QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
@@ -1514,7 +1526,7 @@ if (_QS_ST_X select 0) then {
 				} else {
 					if (isNull ((findDisplay 160) displayCtrl 51)) then {
 						_QS_display1Opened = FALSE;
-					};		
+					};
 				};
 				if (!(_QS_display2Opened)) then {
 					if (!isNull((findDisplay -1) displayCtrl 500)) then {
@@ -1524,7 +1536,7 @@ if (_QS_ST_X select 0) then {
 				} else {
 					if (isNull ((findDisplay -1) displayCtrl 500)) then {
 						_QS_display2Opened = FALSE;
-					};		
+					};
 				};
 				uiSleep 0.25;
 			};
@@ -1691,14 +1703,26 @@ if (_QS_ST_X select 2) then {
 				_groupUpdateDelay = diag_tickTime + _groupUpdateDelay_timer;
 			};
 			if (_gpsRequired) then {
-				if (!('ItemGPS' in (assignedItems player))) then {
+				private _hasGPSDevice = ("ACE_microDAGR" in items player) || {
+					{
+						if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]}) exitWith {true};
+						false
+					} forEach assignedItems player;
+				};
+				if (!(_hasGPSDevice)) then {
 					setGroupIconsVisible [FALSE,FALSE];
 					waitUntil {
 						uiSleep 0.25;
-						('ItemGPS' in (assignedItems player))
+						("ACE_microDAGR" in items player) || {
+							{
+								if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]}) exitWith {true};
+								false
+							} forEach assignedItems player;
+						};
 					};
 				};
 			};
+
 			if ((!(visibleMap)) && (isNull ((findDisplay 160) displayCtrl 51)) && (isNull ((findDisplay -1) displayCtrl 500))) then {
 				waitUntil {
 					uiSleep 0.25;
