@@ -33,7 +33,6 @@ if !(isServer || hasInterface) then {
 };
 
 if (qipTPL_init) then {
-	qipTPL_unit enableSimulation false;
 	if (!qipTPL_uavIntro) then {
 		_l = ["tLayer"] call BIS_fnc_rscLayer;
 		_l cutText ["", "BLACK IN", (qipTPL_missionInitTime + 5)];

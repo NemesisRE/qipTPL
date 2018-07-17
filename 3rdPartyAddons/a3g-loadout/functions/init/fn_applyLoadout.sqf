@@ -111,7 +111,7 @@ if( !_missionStart ) then {
 	// Roledescription based loadouts
 	_role = roleDescription _x splitString " " joinString "";
 	if( isClass ( _configPath >> _role )) then {
-		 	[_configPath >> _role, _x] call A3G_Loadout_fnc_DoLoadout;
+		[_configPath >> _role, _x] call A3G_Loadout_fnc_DoLoadout;
 	};
 
 } forEach _units;

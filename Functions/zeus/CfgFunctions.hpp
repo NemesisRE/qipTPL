@@ -4,4 +4,5 @@ class zeus
 	class isVirtualCurator{};
 	class reassignCurator{};
 	class fixZeusPlacing{};
+	class replaceZeusWatermark{};
 };
