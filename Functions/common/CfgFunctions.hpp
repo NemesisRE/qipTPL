@@ -7,4 +7,5 @@ class common
 		preInit = 1;
 	};
 	class postInit{};
+	class uavHelper{};
 };

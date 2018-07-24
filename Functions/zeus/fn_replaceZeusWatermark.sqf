@@ -7,7 +7,7 @@ while {true} do {
 		_ctrl ctrlSetText "";
 	} else {
 		_ctrl ctrlSetText qipTPL_zeusWatermark;
-	}
+	};
 	_ctrl ctrlCommit 0;
 	waitUntil { sleep 1; isNull (findDisplay 312) };
 };

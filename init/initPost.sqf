@@ -20,6 +20,12 @@ if (isVirtualCurator) exitWith {
 	(getAssignedCuratorLogic player) addEventHandler ["CuratorObjectPlaced", {call qipTPL_fnc_fixZeusPlacing}];*/
 };
 
+_uavHelper = [] spawn {
+	disableSerialization;
+	waitUntil {!isNull ((findDisplay 12) displayCtrl 51)};
+	_ehUavHelperMap = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["draw", "_this call qipTPL_fnc_uavHelper"];
+};
+
 if (getMarkerColor "qipTPL_uavIntroMarker" == "") then {
 	_uavIntroPosition = vehicle qipTPL_unit;
 } else {
