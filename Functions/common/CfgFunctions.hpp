@@ -6,6 +6,8 @@ class common
 	class preInit{
 		preInit = 1;
 	};
-	class postInit{};
+	class postInit{
+		postInit = 1;
+	};
 	class uavHelper{};
 };

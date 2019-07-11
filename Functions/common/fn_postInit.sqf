@@ -20,32 +20,23 @@ call compile preprocessFileLineNumbers ("\qipTPL\init\tplCredits.sqf");
 mod_CBA 			= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
 mod_TFAR 			= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
 mod_ACE3 			= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
-mod_Ares            = isClass (configFile >> "CfgPatches" >> "Ares");
-mod_Achillies 		= isClass (configFile >> "CfgPatches" >> "Achilles");
 isVirtualCurator	= [player] call qipTPL_fnc_isVirtualCurator;
 qipTPL_unit         = (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
 qipTPL_init			= ["initTPL"] call qipTPL_fnc_paramToBool;
-qipTPL_uavIntro		= ["uavIntro"] call qipTPL_fnc_paramToBool;
-PREVIOUS_PLACED		= objNull;
 
 if !(isServer || hasInterface) then {
 	isHC					= true;
 };
 
 if (qipTPL_init) then {
-	if (!qipTPL_uavIntro) then {
-		_l = ["tLayer"] call BIS_fnc_rscLayer;
-		_l cutText ["", "BLACK IN", (qipTPL_missionInitTime + 5)];
-	};
+	_l = ["tLayer"] call BIS_fnc_rscLayer;
+	_l cutText ["", "BLACK IN", (qipTPL_missionInitTime + 5)];
 };
 
 /********** Server only Init **********/
 if (isServer) then  { //server init
 	[] call qipTPL_fnc_rptLog;
 };
-
-/**********  Execute Core  **********/
-qipTPL_initTPL = [] execVM '\qipTPL\init\initTPL.sqf';
 
 /**********  Execute 3rd Party addons/scripts **********/
 qipTPL_init3rdPartyScripts = [] execVM '\qipTPL\3rdPartyScripts\initScripts.sqf';	// initialize 3rd Scripts
