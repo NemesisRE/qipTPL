@@ -4,7 +4,8 @@ Configure the mission timer in initConfig.sqf
 ****************************************************************/
 diag_log "Init - executing initPost.sqf"; // Reporting. Do NOT edit/remove
 
-if (isDedicated || isHC || isVirtualCurator || !(qipTPL_init)) exitWith {};
+if (isDedicated || isHC || isVirtualCurator) exitWith {};
+if !(qipTPL_init) exitWith {};
 
 private ["_unit","_unitName","_cnt","_timerInput","_timer","_halfTime","_uavIntro","_initMsg","_postInitMsg", "_uavIntroPosition"];
 _unitName = name qipTPL_unit;
@@ -12,6 +13,12 @@ _cnt = 0;
 _timerInput = qipTPL_missionInitTime; // Mission Init time counter. Min 30 secs. Add 1 sec per 2 players. 10 players = 35 secs.
 _timer = _timerInput / 100;
 _cntStop = -1;
+
+_uavHelper = [] spawn {
+	disableSerialization;
+	waitUntil {!isNull ((findDisplay 12) displayCtrl 51)};
+	_ehUavHelperMap = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["draw", "_this call qipTPL_fnc_uavHelper"];
+};
 
 while {(_cnt != 100)} do {
 	_cnt = _cnt + 1;
