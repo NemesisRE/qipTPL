@@ -40,7 +40,6 @@ while {(_cnt != 100)} do {
 	};
 };
 
-waitUntil {scriptDone qipTPL_initTPL};
 waitUntil {scriptDone qipTPL_init3rdPartyScripts};
 waitUntil {scriptDone qipTPL_init3rdPartyAddons};
 

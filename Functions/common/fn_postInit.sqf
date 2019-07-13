@@ -7,10 +7,10 @@ per mission base.
 ****************************************************************/
 if (isNil "qipTPL_enabled" || !(qipTPL_enabled)) exitWith {};
 diag_log "Init - executing init.sqf"; // Reporting. Do NOT edit/remove
-
-if (!isDedicated && (isNull player)) then {
+sleep 5;
+/* if (!isDedicated && (isNull player)) then {
 	waitUntil {!isNull player};
-};
+}; */
 call compile preprocessFileLineNumbers ("\qipTPL\qipTPL_config.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\initConfig.sqf");
 call compile preprocessFileLineNumbers ("qipTPL\config\briefing.sqf");
@@ -20,7 +20,6 @@ call compile preprocessFileLineNumbers ("\qipTPL\init\tplCredits.sqf");
 mod_CBA 			= isClass (configFile >> "CfgPatches" >> "cba_main"); // Check if CBA is present
 mod_TFAR 			= isClass (configFile >> "CfgPatches" >> "task_force_radio"); // Check if TFAR is present
 mod_ACE3 			= isClass (configFile >> "CfgPatches" >> "ace_common"); // ACE3 Core
-isVirtualCurator	= [player] call qipTPL_fnc_isVirtualCurator;
 qipTPL_unit         = (missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player]);
 qipTPL_init			= ["initTPL"] call qipTPL_fnc_paramToBool;
 
